@@ -27,13 +27,7 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       key: _key,
       appBar: doolayMenu(_key, context),
-      drawer: Drawer(
-        child: Column(
-          children: const [
-            DrawerHeader(child: Text('Header')),
-          ],
-        ),
-      ),
+      drawer: doolayDrawer(_key, context),
       body: Scrollbar(
         controller: scrollController,
         child: SingleChildScrollView(

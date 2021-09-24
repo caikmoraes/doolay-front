@@ -11,12 +11,15 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           backgroundColor: Styles.OFF_WHITE,
-          shadowColor: Colors.grey,
         ),
         textTheme: const TextTheme(
           bodyText1: TextStyle(
             color: Colors.black,
             fontSize: 24,
+          ),
+          bodyText2: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
           ),
           headline2: TextStyle(
             color: Colors.black,

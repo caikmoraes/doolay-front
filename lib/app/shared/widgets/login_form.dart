@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'doolay_checkbox.dart';
 import 'doolay_textfield.dart';
@@ -43,7 +44,7 @@ class DoolayLoginForm extends StatelessWidget {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Modular.to.navigate('/panel/'),
                   child: const Text('Entrar'),
                 ),
               ),

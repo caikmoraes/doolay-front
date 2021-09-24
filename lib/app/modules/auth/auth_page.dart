@@ -27,7 +27,9 @@ class AuthPageState extends State<AuthPage> {
     final double imgWidth = width * .4;
     final double formWidth = width * .6;
     return Scaffold(
+      key: scaffoldKey,
       appBar: doolayMenu(scaffoldKey, context),
+      drawer: doolayDrawer(scaffoldKey, context),
       body: ResponsiveTool.isLargeScreen(context)
           ? Row(
               children: [

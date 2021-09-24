@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'app_constants.dart';
+import 'layout/style.dart';
 
 AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
     AppBar(
@@ -62,11 +65,45 @@ AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
                 Expanded(child: Container()),
                 IconButton(
                   color: Colors.blue,
-                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                  onPressed: () {
+                    scaffoldKey.currentState!.openDrawer();
+                  },
                   icon: const Icon(Icons.menu),
                 ),
               ],
             ),
+    );
+
+Drawer doolayDrawer(GlobalKey<ScaffoldState> key, BuildContext ctx) => Drawer(
+      child: Column(
+        children: [
+          const DrawerHeader(child: Text('Header')),
+          ...getDoolayPages().map(
+            (page) => page.name != 'Entrar'
+                ? ListTile(
+                    title: Text(page.name),
+                    onTap: () => Modular.to.pushNamed(page.route),
+                    hoverColor: Styles.SECONDARY_COLOR.withOpacity(.4),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            child: Text(page.name),
+                            onPressed: () => Modular.to.pushNamed(page.route),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+          )
+        ],
+      ),
     );
 
 List<DoolayPage> getDoolayPages() {
