@@ -1,10 +1,20 @@
 import 'package:doolay_front/app/shared/app_constants.dart';
+import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:flutter/material.dart';
 
 class JumbotronWidget extends StatefulWidget {
   final double height;
-  const JumbotronWidget({Key? key, required this.height}) : super(key: key);
+  final double width;
+  final String imagePath;
+  final bool overlay;
+  const JumbotronWidget({
+    Key? key,
+    required this.height,
+    required this.imagePath,
+    required this.width,
+    this.overlay = false,
+  }) : super(key: key);
 
   @override
   State<JumbotronWidget> createState() => _JumbotronWidgetState();
@@ -13,20 +23,25 @@ class JumbotronWidget extends StatefulWidget {
 class _JumbotronWidgetState extends State<JumbotronWidget> {
   @override
   Widget build(BuildContext context) {
-    final double _width = MediaQuery.of(context).size.width;
-    return Container(
-      width: _width,
-      height: widget.height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(AppConstants.HOME),
-          colorFilter: ColorFilter.mode(
-            Styles.SECONDARY_COLOR.withOpacity(.5),
-            BlendMode.softLight,
+    return Stack(children: [
+      Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(widget.imagePath),
+            fit: BoxFit.fill,
           ),
-          fit: BoxFit.fill,
         ),
       ),
-    );
+      Visibility(
+        visible: widget.overlay,
+        child: Container(
+          color: Styles.PRIMARY_COLOR.withOpacity(.3),
+          width: widget.width,
+          height: widget.height,
+        ),
+      ),
+    ]);
   }
 }

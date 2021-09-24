@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:doolay_front/app/shared/widgets/jumbotron.dart';
@@ -19,9 +20,11 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
       alignment: Alignment.topCenter,
       children: [
         JumbotronWidget(
+          width: _width,
           height: ResponsiveTool.isLargeScreen(context)
               ? _height
               : _height / 2 - 50,
+          imagePath: AppConstants.HOME,
         ),
         ResponsiveTool.isLargeScreen(context)
             ? PositionedHomeWidget(
