@@ -5,15 +5,19 @@ class HelloWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: 100,
-            color: Colors.grey,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 80),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Icon(
+            Icons.account_circle,
+            size: 64,
           ),
-        )
-      ],
+          SizedBox(width: 24),
+          Text('Oi, fulano! Seu último acesso foi em _/_/_'),
+        ],
+      ),
     );
   }
 }

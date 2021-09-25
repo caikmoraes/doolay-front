@@ -50,6 +50,7 @@ dev_dependencies:
   triple_test: ^0.0.8
   modular_test: ^1.0.1+1
   url_strategy: ^0.2.0
+  rive: ^0.7.28
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -69,6 +70,7 @@ flutter:
     - images/home.png
     - images/login.png
     - images/logo.png
+    - animations/doolay_animation.riv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

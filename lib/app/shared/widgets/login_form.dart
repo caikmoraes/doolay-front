@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -11,6 +12,7 @@ class DoolayLoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthStore authStore = Modular.get();
     return Form(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +46,7 @@ class DoolayLoginForm extends StatelessWidget {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () => Modular.to.navigate('/panel/'),
+                  onPressed: () => authStore.login(context),
                   child: const Text('Entrar'),
                 ),
               ),
