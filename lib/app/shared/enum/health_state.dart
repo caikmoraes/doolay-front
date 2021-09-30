@@ -1,0 +1,1 @@
+enum HealthState { ok, nok }

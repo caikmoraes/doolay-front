@@ -14,6 +14,6 @@ class AuthStore extends NotifierStore<Exception, int> {
     await Future.delayed(
       const Duration(seconds: 3),
     );
-    Modular.to.navigate('/panel');
+    Modular.to.navigate('/panel/');
   }
 }

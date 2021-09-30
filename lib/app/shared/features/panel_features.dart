@@ -1,46 +1,56 @@
 import 'package:flutter/material.dart';
 
-class PanelFeatures {
+class Features {
   final String description;
   final IconData icon;
+  final String? route;
 
-  PanelFeatures(
+  Features(
     this.description,
-    this.icon,
-  );
+    this.icon, {
+    this.route,
+  });
 }
 
-List<PanelFeatures> getPanelFeatures(BuildContext context) => [
-      PanelFeatures(
+List<Features> getFeatures(BuildContext context) => [
+      Features(
+        'Cadastro de suário',
+        Icons.person_add,
+        route: './user/new/',
+      ),
+      Features(
         'Estado de Saúde',
         Icons.add,
+        route: './user/health/',
       ),
-      PanelFeatures(
+      Features(
         'Histórico de Registros',
         Icons.history,
+        route: '/',
       ),
-      PanelFeatures(
+      Features(
         'Histórico de Registros',
         Icons.history,
+        route: '/',
       ),
-      PanelFeatures(
+      Features(
         'Histórico de Registros',
         Icons.history,
+        route: '/',
       ),
-      PanelFeatures(
+      Features(
         'Histórico de Registros',
         Icons.history,
+        route: '/',
       ),
-      PanelFeatures(
+      Features(
         'Histórico de Registros',
         Icons.history,
+        route: '/',
       ),
-      PanelFeatures(
+      Features(
         'Histórico de Registros',
         Icons.history,
-      ),
-      PanelFeatures(
-        'Histórico de Registros',
-        Icons.history,
+        route: '/',
       ),
     ];

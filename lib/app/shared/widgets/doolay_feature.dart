@@ -1,15 +1,18 @@
 import 'package:doolay_front/app/shared/features/panel_features.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class DoolayFeature extends StatelessWidget {
   final IconData icon;
   final String description;
+  final String route;
 
   const DoolayFeature({
     Key? key,
     required this.icon,
     required this.description,
+    required this.route,
   }) : super(key: key);
 
   @override
@@ -45,7 +48,7 @@ class DoolayFeature extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () => print(description),
+        onTap: () => Modular.to.pushNamed(route),
       ),
     );
   }
@@ -65,11 +68,12 @@ class FeaturesList extends StatelessWidget {
           controller: _ctr,
           child: Wrap(
             alignment: WrapAlignment.center,
-            children: getPanelFeatures(context)
+            children: getFeatures(context)
                 .map(
                   (feature) => DoolayFeature(
                     icon: feature.icon,
                     description: feature.description,
+                    route: feature.route!,
                   ),
                 )
                 .toList(),

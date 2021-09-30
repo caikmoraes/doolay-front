@@ -1,14 +1,10 @@
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/features/panel_features.dart';
-import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_feature.dart';
 import 'package:doolay_front/app/shared/widgets/hello_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:flutter/material.dart';
-
-import 'large_panel.dart';
-import 'small_panel.dart';
 
 class PanelPage extends StatefulWidget {
   final String title;
@@ -37,11 +33,12 @@ class PanelPageState extends State<PanelPage> {
               const HelloWidget(),
               Wrap(
                 alignment: WrapAlignment.center,
-                children: getPanelFeatures(context)
+                children: getFeatures(context)
                     .map(
                       (e) => DoolayFeature(
                         icon: e.icon,
                         description: e.description,
+                        route: e.route!,
                       ),
                     )
                     .toList(),

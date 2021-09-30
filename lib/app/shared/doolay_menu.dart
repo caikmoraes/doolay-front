@@ -6,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'app_constants.dart';
 import 'layout/style.dart';
+import 'widgets/doolay_button.dart';
 
 AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
     AppBar(
@@ -41,17 +42,9 @@ AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
                             ),
                           ),
                         )
-                      : ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                                side: const BorderSide(color: Colors.blue),
-                              ),
-                            ),
-                          ),
-                          child: Text(page.name),
-                          onPressed: () => Modular.to.pushNamed(page.route),
+                      : DoolayButton(
+                          text: page.name,
+                          onTap: () => Modular.to.pushNamed(page.route),
                         ),
                 ),
               ],

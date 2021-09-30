@@ -1,0 +1,4 @@
+enum Profile {
+  aluno,
+  funcionario,
+}
