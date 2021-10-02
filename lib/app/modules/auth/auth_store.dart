@@ -22,7 +22,7 @@ class AuthStore extends NotifierStore<Exception, String> {
           'profile': profilePath,
         });
       } else {
-        setError(RequestException());
+        setError(LoginException('Usuário ou senha incorretos'));
       }
     } catch (e) {
       debugPrint('$e');

@@ -168,6 +168,7 @@ class _DoolayErrorAlertState extends State<DoolayErrorAlert> {
         children: [
           Expanded(
             child: Stack(
+              alignment: Alignment.topCenter,
               children: [
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
@@ -185,15 +186,16 @@ class _DoolayErrorAlertState extends State<DoolayErrorAlert> {
                   ),
                 ),
                 Positioned(
-                  right: 0,
-                  top: 0,
-                  child: IconButton(
-                    iconSize: 16,
-                    color: Colors.red,
-                    onPressed: () => setState(() {
+                  right: 8,
+                  top: 10,
+                  child: InkWell(
+                    child: const Icon(
+                      Icons.close,
+                      size: 16,
+                    ),
+                    onTap: () => setState(() {
                       showing = !showing;
                     }),
-                    icon: const Icon(Icons.close),
                   ),
                 ),
               ],
