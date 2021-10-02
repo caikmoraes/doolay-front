@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AppConstants {
   static const LOGO = 'images/logo.png';
   static const LOGIN = 'images/login.png';

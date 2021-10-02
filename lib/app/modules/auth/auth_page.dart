@@ -44,7 +44,7 @@ class AuthPageState extends State<AuthPage> {
                     child: Container(
                       width: formWidth / 2,
                       color: Colors.transparent,
-                      child: DoolayLoginForm(),
+                      child: const DoolayLoginForm(),
                     ),
                   ),
                 ),
@@ -59,24 +59,25 @@ class AuthPageState extends State<AuthPage> {
                   height: height,
                   imagePath: AppConstants.LOGIN,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(.5),
-                        blurRadius: 10,
-                        offset: const Offset(2, 2),
+                SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.5),
+                          blurRadius: 10,
+                          offset: const Offset(2, 2),
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
                       ),
-                    ],
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
+                      color: Styles.OFF_WHITE,
                     ),
-                    color: Styles.OFF_WHITE,
+                    width: width * .9,
+                    child: const DoolayLoginForm(),
                   ),
-                  width: width * .9,
-                  height: 350,
-                  child: DoolayLoginForm(),
                 ),
               ],
             ),

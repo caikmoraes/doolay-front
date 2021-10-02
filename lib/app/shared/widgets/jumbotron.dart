@@ -1,5 +1,3 @@
-import 'package:doolay_front/app/shared/app_constants.dart';
-import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:flutter/material.dart';
 

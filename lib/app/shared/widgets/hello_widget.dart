@@ -1,7 +1,12 @@
+import 'package:doolay_front/app/shared/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HelloWidget extends StatelessWidget {
-  const HelloWidget({Key? key}) : super(key: key);
+  final User user;
+  const HelloWidget({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +16,14 @@ class HelloWidget extends StatelessWidget {
       child: Wrap(
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
-        children: const [
-          Icon(
+        children: [
+          const Icon(
             Icons.account_circle,
             size: 64,
           ),
-          SizedBox(width: 24),
-          Text('Oi, fulano! Seu último acesso foi em _/_/_'),
+          const SizedBox(width: 24),
+          Text(
+              'Oi, ${user.firstName}! ${user.lastLogin == null ? 'Seja bem-vindo ao Doolay :)' : 'Seu último acesso foi em ${user.lastLogin!.day}/${user.lastLogin!.month}/${user.lastLogin!.year}'}'),
         ],
       ),
     );

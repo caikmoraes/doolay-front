@@ -8,10 +8,13 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AlertDialog(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      content: RiveAnimation.asset(AppConstants.DOOLAY_ANIMATION),
+    return Center(
+      child: Container(
+        width: 100,
+        height: 100,
+        color: Colors.transparent,
+        child: const RiveAnimation.asset(AppConstants.DOOLAY_ANIMATION),
+      ),
     );
   }
 }

@@ -16,37 +16,12 @@ List<Features> getFeatures(BuildContext context) => [
       Features(
         'Cadastro de suário',
         Icons.person_add,
-        route: './user/new/',
+        route: './user/new',
       ),
       Features(
         'Estado de Saúde',
         Icons.add,
-        route: './user/health/',
-      ),
-      Features(
-        'Histórico de Registros',
-        Icons.history,
-        route: '/',
-      ),
-      Features(
-        'Histórico de Registros',
-        Icons.history,
-        route: '/',
-      ),
-      Features(
-        'Histórico de Registros',
-        Icons.history,
-        route: '/',
-      ),
-      Features(
-        'Histórico de Registros',
-        Icons.history,
-        route: '/',
-      ),
-      Features(
-        'Histórico de Registros',
-        Icons.history,
-        route: '/',
+        route: './health/',
       ),
       Features(
         'Histórico de Registros',

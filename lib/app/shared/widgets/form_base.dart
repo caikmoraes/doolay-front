@@ -14,26 +14,31 @@ class FormBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    return Container(
-      width: ResponsiveTool.isLargeScreen(context) ? 700 : width * .9,
-      height: height ?? 430,
-      decoration: BoxDecoration(
-        color: Styles.OFF_WHITE,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 1,
-            color: Colors.black.withOpacity(.2),
-            offset: const Offset(1, 1),
+    final ScrollController scrollController = ScrollController();
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Container(
+        width: ResponsiveTool.isLargeScreen(context) ? 700 : width * .9,
+        height: height,
+        margin: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          color: Styles.OFF_WHITE,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 5,
+              spreadRadius: 1,
+              color: Colors.black.withOpacity(.2),
+              offset: const Offset(1, 1),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            width: 1,
+            color: Styles.PRIMARY_COLOR,
           ),
-        ],
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 1,
-          color: Styles.PRIMARY_COLOR,
         ),
+        child: child,
       ),
-      child: child,
     );
   }
 }

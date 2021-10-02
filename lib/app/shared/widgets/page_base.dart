@@ -1,8 +1,6 @@
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:flutter/material.dart';
 
-import '../app_constants.dart';
-
 class PageBase extends StatelessWidget {
   final String background;
   final Widget child;

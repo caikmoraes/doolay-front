@@ -1,7 +1,4 @@
-import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
-import 'package:doolay_front/app/shared/layout/responsive.dart';
-import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:doolay_front/app/shared/widgets/feature.dart';
 import 'package:doolay_front/app/shared/widgets/welcome.dart';
 import 'package:flutter_modular/flutter_modular.dart';

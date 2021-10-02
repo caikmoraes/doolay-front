@@ -51,6 +51,7 @@ dev_dependencies:
   modular_test: ^1.0.1+1
   url_strategy: ^0.2.0
   rive: ^0.7.28
+  http: ^0.13.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
