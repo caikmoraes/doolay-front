@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doolay_front/app/shared/model/user_model.dart';
 import 'package:doolay_front/app/shared/repositories/user_repository.dart';
 import 'package:flutter/material.dart';

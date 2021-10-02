@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 class UserModel {
   String? numMatricula;
   User? user;

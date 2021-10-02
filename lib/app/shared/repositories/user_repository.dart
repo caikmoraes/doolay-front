@@ -13,7 +13,7 @@ class UserRepository {
 
     var url = 'usuarios/$profilePath/login/';
     try {
-      Response response = await client.executePost(url, json);
+      Response response = await client.executePost(path: url, json: json);
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
         String? message = jsonResponse['message'].toString();
@@ -34,6 +34,23 @@ class UserRepository {
         var json = jsonDecode(response.body);
         UserModel? model = UserModel.fromJson(json);
         return model;
+      }
+    } catch (e) {
+      debugPrint('$e');
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> saveNewUser(
+      Map<String, dynamic> json, String profile) async {
+    WebClient client = Modular.get();
+    debugger();
+    var path = 'usuarios/$profile/create/';
+    try {
+      Response response = await client.executePost(json: json, path: path);
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        return json;
       }
     } catch (e) {
       debugPrint('$e');

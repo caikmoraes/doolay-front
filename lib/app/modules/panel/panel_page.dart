@@ -7,7 +7,6 @@ import 'package:doolay_front/app/shared/widgets/loading_screen.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_triple/flutter_triple.dart';
 
 class PanelPage extends StatefulWidget {
   final Map<String, dynamic> userMap;

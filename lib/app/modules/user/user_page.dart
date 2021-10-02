@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/enum/profile.dart';
@@ -8,11 +11,14 @@ import 'package:doolay_front/app/shared/widgets/doolay_button.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_date_picker.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_select_field.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_textfield.dart';
-import 'package:doolay_front/app/shared/widgets/doolay_user_type_radio.dart';
 import 'package:doolay_front/app/shared/widgets/form_base.dart';
+import 'package:doolay_front/app/shared/widgets/loading_screen.dart';
 import 'package:doolay_front/app/shared/widgets/login_form.dart';
 import 'package:doolay_front/app/shared/widgets/page_base.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class UserPage extends StatefulWidget {
   final String title;
@@ -54,9 +60,13 @@ class _UserFormState extends State<UserForm> {
   final TextEditingController fullNameCtr = TextEditingController();
   final TextEditingController senhaCtr = TextEditingController();
   final TextEditingController dataNascimentoCtr = TextEditingController();
+  final MaskTextInputFormatter dateMask = MaskTextInputFormatter(
+      mask: '##/##/####', filter: {'#': RegExp(r'[0-9]')});
   final TextEditingController setorCtr = TextEditingController();
   final TextEditingController cidadeCtr = TextEditingController();
   final TextEditingController estadoCtr = TextEditingController();
+  final UserStore store = Modular.get();
+
   Profile? profile = Profile.aluno;
 
   clearControllers() {
@@ -126,6 +136,7 @@ class _UserFormState extends State<UserForm> {
                                 child: DoolayDatePicker(
                                   controller: dataNascimentoCtr,
                                   label: 'Data de Nascimento',
+                                  mask: dateMask,
                                   onPicked: () => showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
@@ -155,6 +166,7 @@ class _UserFormState extends State<UserForm> {
                               DoolayDatePicker(
                                 controller: dataNascimentoCtr,
                                 label: 'Data de Nascimento',
+                                mask: dateMask,
                                 onPicked: () => showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
@@ -205,7 +217,7 @@ class _UserFormState extends State<UserForm> {
                               onChange: (String? value) {
                                 if (value != null) {
                                   setState(() {
-                                    cidadeCtr.text = value;
+                                    estadoCtr.text = value;
                                   });
                                 }
                               },
@@ -214,9 +226,87 @@ class _UserFormState extends State<UserForm> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    DoolayButton(
-                      text: 'Cadastrar',
-                      onTap: () {},
+                    ScopedBuilder(
+                      store: store,
+                      onState: (context, state) {
+                        return Column(
+                          children: [
+                            if (state == 1)
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.green,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.green[50],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Center(
+                                      child: Text(
+                                        'Cadastrado realizado',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            DoolayButton(
+                              text: 'Cadastrar',
+                              onTap: () async {
+                                debugger();
+                                Map<String, dynamic> json = <String, dynamic>{
+                                  "first_name": fullNameCtr.text.split(' ')[0],
+                                  "last_name": fullNameCtr.text.split(' ')[1],
+                                  profile == Profile.aluno
+                                      ? 'num_matricula'
+                                      : 'num_funcional': tiaOrDrtCtr.text,
+                                  "password":
+                                      '${fullNameCtr.text.split(' ')[0]}.${fullNameCtr.text.split(' ')[1]}${DateTime.now().year}',
+                                  "setor": setorCtr.text,
+                                  "cidade": cidadeCtr.text,
+                                  "estado": estadoCtr.text,
+                                };
+                                store.saveNewUser(
+                                    json,
+                                    profile == Profile.aluno
+                                        ? 'alunos'
+                                        : 'funcionarios');
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                      onLoading: (context) => const LoadingScreen(),
+                      onError: (context, error) => Column(
+                        children: [
+                          DoolayErrorAlert(text: '$error'),
+                          DoolayButton(
+                            text: 'Cadastrar',
+                            onTap: () async {
+                              Map<String, dynamic> json = <String, dynamic>{
+                                "first_name": fullNameCtr.text.split(' ')[0],
+                                "last_name": fullNameCtr.text.split(' ')[1],
+                                "num_funcional": tiaOrDrtCtr.text,
+                                "password":
+                                    '${fullNameCtr.text.split(' ')[0]}.${fullNameCtr.text.split(' ')[1]}${DateTime.now().year}',
+                                "setor": setorCtr.text,
+                                "cidade": cidadeCtr.text,
+                                "estado": estadoCtr.text,
+                              };
+                              store.saveNewUser(
+                                  json,
+                                  profile == Profile.aluno
+                                      ? 'alunos'
+                                      : 'funcionarios');
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

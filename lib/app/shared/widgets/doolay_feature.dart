@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';

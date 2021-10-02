@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class WebClient {
@@ -13,7 +10,7 @@ class WebClient {
   }
 
   Future<http.Response> executePost(
-      String path, Map<String, dynamic> json) async {
+      {required String path, required Map<String, dynamic> json}) async {
     var url = Uri.parse('$baseUrl/$path');
     final Map<String, String> mapHeaders = {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work

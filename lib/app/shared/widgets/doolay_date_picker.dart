@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class DoolayDatePicker extends StatefulWidget {
   final String label;
   final TextEditingController controller;
   final Function onPicked;
+  final MaskTextInputFormatter mask;
   const DoolayDatePicker({
     Key? key,
     required this.label,
     required this.controller,
     required this.onPicked,
+    required this.mask,
   }) : super(key: key);
 
   @override
@@ -27,6 +30,7 @@ class _DoolayDatePickerState extends State<DoolayDatePicker> {
             labelText: widget.label,
           ),
           controller: widget.controller,
+          inputFormatters: [widget.mask],
         ),
         Visibility(
           child: Positioned(
