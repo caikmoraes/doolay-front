@@ -21,6 +21,8 @@ class AuthStore extends NotifierStore<Exception, String> {
           'userId': json['num_matricula'],
           'profile': profilePath,
         });
+      } else {
+        setError(RequestException());
       }
     } catch (e) {
       debugPrint('$e');

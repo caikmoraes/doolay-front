@@ -18,23 +18,23 @@ class DoolayFeature extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        width: 200,
-        height: 150,
-        margin: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Styles.SECONDARY_COLOR,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.1),
-              offset: const Offset(2, 2),
-              blurRadius: 10,
-              spreadRadius: 1,
-            ),
-          ],
-        ),
+    return Container(
+      width: 200,
+      height: 150,
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Styles.SECONDARY_COLOR,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.1),
+            offset: const Offset(2, 2),
+            blurRadius: 10,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: InkWell(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -50,10 +50,10 @@ class DoolayFeature extends StatelessWidget {
             ),
           ],
         ),
+        onTap: () {
+          Modular.to.pushNamed(route);
+        },
       ),
-      onTap: () {
-        Modular.to.navigate(route);
-      },
     );
   }
 }
