@@ -4,8 +4,6 @@ import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:doolay_front/app/shared/widgets/jumbotron.dart';
 import 'package:doolay_front/app/shared/widgets/login_form.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
@@ -16,7 +14,6 @@ class AuthPage extends StatefulWidget {
 }
 
 class AuthPageState extends State<AuthPage> {
-  final AuthStore store = Modular.get();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final TextEditingController loginController = TextEditingController();
   final TextEditingController passController = TextEditingController();

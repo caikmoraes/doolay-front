@@ -7,13 +7,14 @@ import 'package:doolay_front/app/shared/widgets/loading_screen.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 
 class PanelPage extends StatefulWidget {
   final Map<String, dynamic> userMap;
   final String title;
   const PanelPage({
     Key? key,
-    this.title = 'PanelPage',
+    this.title = 'Painel',
     required this.userMap,
   }) : super(key: key);
   @override
@@ -25,57 +26,52 @@ class PanelPageState extends State<PanelPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
+  initState() {
+    store.fetchUserDetails(
+      widget.userMap['userId'],
+      widget.userMap['profile'],
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
-    final PanelStore store = Modular.get();
     return Scaffold(
       key: _key,
       appBar: doolayMenu(_key, context),
       drawer: doolayDrawer(_key, context),
-      body: FutureBuilder(
-        future: store.fetchUserDetails(
-          widget.userMap['userId'],
-          widget.userMap['profile'],
+      body: ScopedBuilder(
+        store: store,
+        onLoading: (context) => const LoadingScreen(),
+        onError: (context, error) => const Center(
+          child: Text('Ops! Algo deu errado'),
         ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const LoadingScreen();
-            case ConnectionState.done:
-              User? user = snapshot.data as User?;
-              if (user != null) {
-                return Scrollbar(
-                  controller: scrollController,
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        HelloWidget(
-                          user: user,
+        onState: (context, User user) => Scrollbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                HelloWidget(
+                  user: user,
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  children: getFeatures(context)
+                      .map(
+                        (e) => DoolayFeature(
+                          icon: e.icon,
+                          description: e.description,
+                          route: e.route!,
                         ),
-                        Wrap(
-                          alignment: WrapAlignment.center,
-                          children: getFeatures(context)
-                              .map(
-                                (e) => DoolayFeature(
-                                  icon: e.icon,
-                                  description: e.description,
-                                  route: e.route!,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-          }
-          return const Center(
-            child: Text('Uknown error'),
-          );
-        },
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

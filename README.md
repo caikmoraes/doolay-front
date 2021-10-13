@@ -1,16 +1,65 @@
-# doolay_front
+# <div style="display: flex; align-items=center; flex-wrap: wrap;"><img src="images/logo.png" alt="doolay"><span style="margin: 10px;">Doolay</span></div>
 
-A new Flutter project.
+> Projeto para monitoramento de saúde dos membros de uma instituição.
 
-## Getting Started
+## :computer: Desenvolvimento
 
-This project is a starting point for a Flutter application.
+O projeto ainda está em desenvolvimento e as próximas atualizações do front-end serão voltadas nas seguintes tarefas:
 
-A few resources to get you started if this is your first Flutter project:
+- [x] Home Page
+- [ ] Página informativa sobre Covid-19 
+- [ ] Página informativa sobre sobre os responsáveis pelo projeto
+- [ ] Página de Contato
+- [x] Página de Login
+- [ ] Painel do usuário
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## :books: Aprendizado
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Utilização de animação com **Rive**
+* Gerência de estados com `flutter_triple`
+* Gerenciamento de rotas e dependências com `flutter_modular`
+
+## :thought_balloon: Próximos passos
+
+* Redimensionamento de imagens
+* Publicação do app na Play Store
+* Publicação do app na Apple Store
+
+## :handshake: Colaboradores
+
+<div style="display: flex; flex-wrap: wrap; margin-bottom: 20px;">
+    <div style="margin-right: 20px">
+      <a href="https://github.com/caikmoraes">
+        <img src="https://avatars.githubusercontent.com/u/47791767?s=400&u=a11d5fd88b27b9d86d54df93c57f5a1b01921207&v=4" width="100px;" alt="Foto do Caik Moraes no GitHub"/><br>
+        <sub>
+          <b>Caik Moraes</b>
+        </sub>
+      </a>
+    </div>
+    <div style="margin-right: 20px">
+      <a href="https://github.com/marcellorcestaro">
+        <img src="https://avatars.githubusercontent.com/u/32852416?v=4" width="100px;" alt="Foto do Marcello Cestaro"/><br>
+        <sub>
+          <b>Marcello Cestaro</b>
+        </sub>
+      </a>
+    </div>
+    <div style="margin-right: 20px">
+      <a href="https://github.com/ortizfrancielly">
+        <img src="https://avatars.githubusercontent.com/u/59661321?v=4" width="100px;" alt="Foto do Francielly Ortiz"/><br>
+        <sub>
+          <b>Francielly Ortiz</b>
+        </sub>
+      </a>
+    </div>
+    <div style="margin-right: 20px">
+      <a href="https://github.com/jvmoraisr6597">
+        <img src="https://avatars.githubusercontent.com/u/55808088?v=4" width="100px;" alt="Foto do João Victor"/><br>
+        <sub>
+          <b>João Victor</b>
+        </sub>
+      </a>
+    </div>
+</div>
+
+[⬆ Voltar ao topo](#Doolay)<br>

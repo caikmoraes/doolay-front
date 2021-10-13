@@ -20,13 +20,13 @@ class DoolayLoginForm extends StatefulWidget {
 class _DoolayLoginFormState extends State<DoolayLoginForm> {
   final TextEditingController tiaOrDrtCtr = TextEditingController();
 
-  final TextEditingController passController = TextEditingController();
+  final TextEditingController passwordCtr = TextEditingController();
 
   Profile? profile = Profile.aluno;
 
   clearControllers() {
     tiaOrDrtCtr.clear();
-    passController.clear();
+    passwordCtr.clear();
   }
 
   @override
@@ -79,11 +79,11 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
             profile!,
             tiaOrDrtCtr,
             (value) =>
-                value == null || value.isEmpty ? 'Preencha seu login' : null,
+                value == null || value.isEmpty ? 'Preencha seu login.' : null,
           ),
           const SizedBox(height: 16),
           DoolayTextField(
-            controller: passController,
+            controller: passwordCtr,
             label: 'Senha',
             isPassword: true,
             validator: (String? value) =>
@@ -98,13 +98,29 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
             store: authStore,
             onLoading: (context) => const LoadingScreen(),
             onState: (context, state) => DoolayLoginButton(
-              onTap: () => login(key, authStore),
+              onTap: () {
+                if (key.currentState!.validate()) {
+                  return authStore.login(
+                    tiaOrDrtCtr.text,
+                    passwordCtr.text,
+                    profile,
+                  );
+                }
+              },
             ),
             onError: (context, error) => Column(
               children: [
                 DoolayErrorAlert(text: '$error'),
                 DoolayLoginButton(
-                  onTap: () => login(key, authStore),
+                  onTap: () {
+                    if (key.currentState!.validate()) {
+                      return authStore.login(
+                        tiaOrDrtCtr.text,
+                        passwordCtr.text,
+                        profile,
+                      );
+                    }
+                  },
                 ),
               ],
             ),
@@ -112,16 +128,6 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
         ],
       ),
     );
-  }
-
-  login(GlobalKey<FormState> key, AuthStore authStore) {
-    if (key.currentState!.validate()) {
-      Map<String, dynamic> json = <String, dynamic>{};
-      json['num_matricula'] = tiaOrDrtCtr.text;
-      json['password'] = passController.text;
-      String profilePath = profile == Profile.aluno ? 'alunos' : 'funcionarios';
-      authStore.login(context, json, profilePath);
-    }
   }
 }
 

@@ -1,8 +1,6 @@
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/widgets/feature.dart';
 import 'package:doolay_front/app/shared/widgets/welcome.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:doolay_front/app/modules/home/home_store.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final HomeStore store = Modular.get();
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   @override

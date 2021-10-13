@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/exceptions/login_exception.dart';
 import 'package:doolay_front/app/shared/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +8,15 @@ import 'package:flutter_triple/flutter_triple.dart';
 class AuthStore extends NotifierStore<Exception, String> {
   AuthStore() : super('');
 
-  Future<void> login(BuildContext context, Map<String, dynamic> json,
-      String profilePath) async {
+  Future<void> login(
+      String? tiaOrDrt, String? password, Profile? profile) async {
     setLoading(true);
     try {
+      Map<String, dynamic> json = {
+        'num_matricula': tiaOrDrt,
+        'password': password,
+      };
+      String profilePath = profile == Profile.aluno ? 'alunos' : 'funcionarios';
       UserRepository repo = Modular.get();
       String? loggedUser = await repo.login(json, profilePath);
       if (loggedUser != null && loggedUser == 'OK') {

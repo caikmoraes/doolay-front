@@ -1,12 +1,9 @@
 import 'package:doolay_front/app/modules/home/home_page.dart';
-import 'package:doolay_front/app/modules/home/home_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeModule extends Module {
   @override
-  final List<Bind> binds = [
-    Bind.lazySingleton((i) => HomeStore()),
-  ];
+  final List<Bind> binds = [];
 
   @override
   final List<ModularRoute> routes = [

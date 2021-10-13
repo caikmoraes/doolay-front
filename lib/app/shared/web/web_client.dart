@@ -12,18 +12,10 @@ class WebClient {
   Future<http.Response> executePost(
       {required String path, required Map<String, dynamic> json}) async {
     var url = Uri.parse('$baseUrl/$path');
-    final Map<String, String> mapHeaders = {
-      "Access-Control-Allow-Origin": "*",
-    };
     var response = await http.post(
       url,
       body: json,
-      headers: mapHeaders,
     );
     return response;
   }
-
-  // Future<Response> executeDelete(String url) async {
-  //   return Dio().delete('$baseUrl/$url');
-  // }
 }

@@ -10,7 +10,7 @@ class PanelModule extends Module {
   final List<Bind> binds = [
     Bind.factory((i) => UserRepository()),
     Bind.singleton((i) => User()),
-    Bind.lazySingleton((i) => PanelStore(i())),
+    Bind.factory((i) => PanelStore(i())),
   ];
 
   @override
