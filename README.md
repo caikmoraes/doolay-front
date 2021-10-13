@@ -27,39 +27,41 @@ O projeto ainda está em desenvolvimento e as próximas atualizações do front-
 
 ## :handshake: Colaboradores
 
-<div style="display: flex; flex-wrap: wrap; margin-bottom: 20px;">
-    <div style="margin-right: 20px">
+<table>
+  <tr>
+    <td align="center">
       <a href="https://github.com/caikmoraes">
         <img src="https://avatars.githubusercontent.com/u/47791767?s=400&u=a11d5fd88b27b9d86d54df93c57f5a1b01921207&v=4" width="100px;" alt="Foto do Caik Moraes no GitHub"/><br>
         <sub>
           <b>Caik Moraes</b>
         </sub>
       </a>
-    </div>
-    <div style="margin-right: 20px">
+    </td>
+    <td align="center">
       <a href="https://github.com/marcellorcestaro">
         <img src="https://avatars.githubusercontent.com/u/32852416?v=4" width="100px;" alt="Foto do Marcello Cestaro"/><br>
         <sub>
           <b>Marcello Cestaro</b>
         </sub>
       </a>
-    </div>
-    <div style="margin-right: 20px">
+    </td>
+    <td align="center">
       <a href="https://github.com/ortizfrancielly">
         <img src="https://avatars.githubusercontent.com/u/59661321?v=4" width="100px;" alt="Foto do Francielly Ortiz"/><br>
         <sub>
           <b>Francielly Ortiz</b>
         </sub>
       </a>
-    </div>
-    <div style="margin-right: 20px">
+    </td>
+    <td align="center">
       <a href="https://github.com/jvmoraisr6597">
         <img src="https://avatars.githubusercontent.com/u/55808088?v=4" width="100px;" alt="Foto do João Victor"/><br>
         <sub>
           <b>João Victor</b>
         </sub>
       </a>
-    </div>
-</div>
+    </td>
+  </tr>
+</table>
 
 [⬆ Voltar ao topo](#Doolay)<br>
