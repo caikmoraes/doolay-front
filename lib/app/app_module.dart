@@ -1,5 +1,6 @@
 import 'package:doolay_front/app/modules/auth/auth_module.dart';
 import 'package:doolay_front/app/modules/auth/auth_store.dart';
+import 'package:doolay_front/app/modules/contact/contact_module.dart';
 import 'package:doolay_front/app/modules/home/home_module.dart';
 import 'package:doolay_front/app/modules/panel/panel_module.dart';
 import 'package:doolay_front/app/shared/model/user_model.dart';
@@ -19,5 +20,6 @@ class AppModule extends Module {
     ModuleRoute('/', module: HomeModule()),
     ModuleRoute('/auth/', module: AuthModule()),
     ModuleRoute('/panel/', module: PanelModule()),
+    ModuleRoute('/contact/', module: ContactModule()),
   ];
 }
