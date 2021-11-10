@@ -1,5 +1,5 @@
 import 'package:doolay_front/app/modules/covid/covid_store.dart';
-import 'package:doolay_front/app/modules/covid_cases/covid_cases_page.dart';
+import 'package:doolay_front/app/modules/covid_cases/covid_cases_widget.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/widgets/covid_main_symptoms.dart';
@@ -26,7 +26,7 @@ class CovidPageState extends State<CovidPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double containerWidth = width * .8;
+    double containerWidth = width * .8 > 1024 ? 1024 : width * .8;
 
     return Scaffold(
       key: _key,
@@ -80,12 +80,63 @@ class CovidPageState extends State<CovidPage> {
                     Row(
                       children: const [
                         Expanded(
-                          child: CovidCasesWidget(),
+                          child: CovidCasesWidget(height: 300),
                         ),
                       ],
                     ),
-                  ] else
-                    ...[]
+                  ] else ...[
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              DoolayPageSubHeader(text: 'O que é?'),
+                              SizedBox(height: 16),
+                              CovidWhatIs(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              DoolayPageSubHeader(text: 'Casos no Brasil'),
+                              SizedBox(height: 16),
+                              CovidCasesWidget(height: 165),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              DoolayPageSubHeader(text: 'Principais sintomas'),
+                              SizedBox(height: 16),
+                              CovidMainSymptoms(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              DoolayPageSubHeader(text: 'Prevenção'),
+                              SizedBox(height: 16),
+                              CovidPrevention(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]
                 ],
               ),
             ),

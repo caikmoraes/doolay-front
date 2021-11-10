@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class WebClient {
@@ -17,5 +19,10 @@ class WebClient {
       body: json,
     );
     return response;
+  }
+
+  Future<Map<String, dynamic>> fetchCovidCases(Uri url) async {
+    var response = await http.get(url);
+    return jsonDecode(response.body);
   }
 }
