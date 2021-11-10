@@ -1,5 +1,6 @@
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_page_header.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/contact/contact_store.dart';
 import 'package:flutter/material.dart';
@@ -112,23 +113,6 @@ class ContactAddress extends StatelessWidget {
           Text("01302-907"),
           Text("(11) 2114-8000"),
         ],
-      ),
-    );
-  }
-}
-
-class DoolayPageHeader extends StatelessWidget {
-  final String text;
-
-  const DoolayPageHeader({Key? key, required this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 36,
-        fontWeight: FontWeight.bold,
       ),
     );
   }

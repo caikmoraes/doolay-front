@@ -2,6 +2,7 @@ import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/enum/health_state.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
+import 'package:doolay_front/app/shared/model/symptoms.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_button.dart';
 import 'package:doolay_front/app/shared/widgets/form_base.dart';
@@ -159,8 +160,4 @@ class _DoolayCheckBoxState extends State<DoolayCheckBox> {
   }
 }
 
-class Symptoms {
-  final String description;
 
-  Symptoms(this.description);
-}

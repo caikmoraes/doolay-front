@@ -31,6 +31,7 @@ class PanelPageState extends State<PanelPage> {
       widget.userMap['userId'],
       widget.userMap['profile'],
     );
+    super.initState();
   }
 
   @override
