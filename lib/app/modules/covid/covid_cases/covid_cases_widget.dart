@@ -1,7 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:doolay_front/app/modules/covid_cases/covid_cases_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+
+import 'covid_cases_store.dart';
 
 class CovidCasesWidget extends StatefulWidget {
     final double? height;

@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/modules/about_us/about_us_module.dart';
 import 'package:doolay_front/app/modules/auth/auth_module.dart';
 import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:doolay_front/app/modules/contact/contact_module.dart';
@@ -23,5 +24,6 @@ class AppModule extends Module {
     ModuleRoute('/panel/', module: PanelModule()),
     ModuleRoute('/contact/', module: ContactModule()),
     ModuleRoute('/covid19/', module: CovidModule()),
+    ModuleRoute('/about/', module: AboutUsModule()),
   ];
 }

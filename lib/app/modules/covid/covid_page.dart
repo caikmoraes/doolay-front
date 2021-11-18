@@ -1,5 +1,4 @@
 import 'package:doolay_front/app/modules/covid/covid_store.dart';
-import 'package:doolay_front/app/modules/covid_cases/covid_cases_widget.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/widgets/covid_main_symptoms.dart';
@@ -9,6 +8,8 @@ import 'package:doolay_front/app/shared/widgets/doolay_page_header.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_page_subheader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import 'covid_cases/covid_cases_widget.dart';
 
 class CovidPage extends StatefulWidget {
   final String title;

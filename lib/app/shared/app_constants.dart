@@ -6,5 +6,6 @@ class AppConstants {
   static const HOME = 'images/home.png';
   static const BACKGROUND_USU = 'images/backgroundUsuario.png';
   static const BACKGROUND_SAUDE = 'images/backgroundEstadoSaude.png';
+  static const GITHUB_ICON = 'images/github.svg';
   static const DOOLAY_ANIMATION = 'animations/doolay_animation.riv';
 }
