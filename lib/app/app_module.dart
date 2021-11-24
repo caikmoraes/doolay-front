@@ -14,7 +14,7 @@ class AppModule extends Module {
   final List<Bind> binds = [
     Bind.lazySingleton((i) => WebClient()),
     Bind.lazySingleton((i) => UserModel()),
-    Bind.lazySingleton((i) => AuthStore())
+    Bind.lazySingleton((i) => AuthStore(''))
   ];
 
   @override

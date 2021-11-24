@@ -1,20 +1,25 @@
 class UserModel {
-  String? numMatricula;
-  User? user;
+  String? numIdentificacao;
+  String? tipoUsuario;
+  String? name;
 
-  UserModel({this.numMatricula, this.user});
+  UserModel({
+    this.name,
+    this.numIdentificacao,
+    this.tipoUsuario,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    numMatricula = json['num_matricula'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    numIdentificacao = json['num_identificacao'];
+    name = json['name'];
+    tipoUsuario = json['tipo_usuario'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['num_matricula'] = numMatricula;
-    if (user != null) {
-      data['user'] = user!.toJson();
-    }
+    data['num_identificacao'] = numIdentificacao;
+    data['name'] = name;
+    data['tipo_usuario'] = tipoUsuario;
     return data;
   }
 }

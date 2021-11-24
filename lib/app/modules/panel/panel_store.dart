@@ -4,20 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-class PanelStore extends StreamStore<Exception, User> {
-  final User initialState;
+class PanelStore extends StreamStore<Exception, UserModel> {
+  final UserModel initialState;
+
   PanelStore(this.initialState) : super(initialState);
 
-  Future<User?> fetchUserDetails(String userId, String profile) async {
+  Future<UserModel?> fetchUserDetails() async {
+    setLoading(true);
     try {
       UserRepository repo = Modular.get();
-      UserModel? model = await repo.fetchUserDetails(userId, profile);
-      if (model != null) {
-        User? user = model.user;
-        return user;
+      UserModel? model = await repo.fetchUserDetails();
+      if(model == null) {
+        setLoading(false);
+        Modular.to.pushReplacementNamed('/auth');
+      } else {
+        update(model);
       }
     } catch (e) {
       debugPrint('$e');
+    } finally {
+      setLoading(false);
     }
     return null;
   }

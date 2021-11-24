@@ -18,14 +18,12 @@ class DoolayLoginForm extends StatefulWidget {
 }
 
 class _DoolayLoginFormState extends State<DoolayLoginForm> {
-  final TextEditingController tiaOrDrtCtr = TextEditingController();
+  TextEditingController tiaController = TextEditingController();
 
-  final TextEditingController passwordCtr = TextEditingController();
-
-  Profile? profile = Profile.aluno;
+  TextEditingController passwordCtr = TextEditingController();
 
   clearControllers() {
-    tiaOrDrtCtr.clear();
+    tiaController.clear();
     passwordCtr.clear();
   }
 
@@ -49,37 +47,10 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
             style: Theme.of(context).textTheme.headline3,
           ),
           const SizedBox(height: 16),
-          const Text('Selecione seu perfil:'),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              DoolaySelectedProfile(
-                baseValue: Profile.aluno,
-                currentValue: profile,
-                label: 'Aluno',
-                onSelect: (Profile? value) => setState(() {
-                  clearControllers();
-                  profile = value;
-                }),
-              ),
-              const SizedBox(width: 8),
-              DoolaySelectedProfile(
-                baseValue: Profile.funcionario,
-                currentValue: profile,
-                label: 'Funcionario',
-                onSelect: (Profile? value) => setState(() {
-                  clearControllers();
-                  profile = value;
-                }),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          FormUtils.showTiaOrDrt(
-            profile!,
-            tiaOrDrtCtr,
-            (value) =>
-                value == null || value.isEmpty ? 'Preencha seu login.' : null,
+          DoolayTextField(
+            controller: tiaController,
+            label: 'TIA ou DRT',
+            validator: (value) => validateTIA(value),
           ),
           const SizedBox(height: 16),
           DoolayTextField(
@@ -98,29 +69,13 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
             store: authStore,
             onLoading: (context) => const LoadingScreen(),
             onState: (context, state) => DoolayLoginButton(
-              onTap: () {
-                if (key.currentState!.validate()) {
-                  return authStore.login(
-                    tiaOrDrtCtr.text,
-                    passwordCtr.text,
-                    profile,
-                  );
-                }
-              },
+              onTap: () => sendLogin(key, authStore),
             ),
             onError: (context, error) => Column(
               children: [
                 DoolayErrorAlert(text: '$error'),
                 DoolayLoginButton(
-                  onTap: () {
-                    if (key.currentState!.validate()) {
-                      return authStore.login(
-                        tiaOrDrtCtr.text,
-                        passwordCtr.text,
-                        profile,
-                      );
-                    }
-                  },
+                  onTap: () => sendLogin(key, authStore),
                 ),
               ],
             ),
@@ -129,10 +84,22 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
       ),
     );
   }
+
+  sendLogin(GlobalKey<FormState> key, AuthStore store) {
+    if (key.currentState!.validate()) {
+      return store.login(
+        tiaController.text,
+        passwordCtr.text,
+      );
+    }
+  }
+
+  String? validateTIA(value) => value == null ? 'Campo obrigatório' : null;
 }
 
 class DoolayLoginButton extends StatelessWidget {
   final Function onTap;
+
   const DoolayLoginButton({
     Key? key,
     required this.onTap,
@@ -155,6 +122,7 @@ class DoolayLoginButton extends StatelessWidget {
 
 class DoolayErrorAlert extends StatefulWidget {
   final String text;
+
   const DoolayErrorAlert({
     Key? key,
     required this.text,
@@ -166,6 +134,7 @@ class DoolayErrorAlert extends StatefulWidget {
 
 class _DoolayErrorAlertState extends State<DoolayErrorAlert> {
   bool showing = true;
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -218,6 +187,7 @@ class DoolaySelectedProfile extends StatelessWidget {
   final Profile? currentValue;
   final Profile baseValue;
   final Function onSelect;
+
   const DoolaySelectedProfile({
     Key? key,
     required this.label,

@@ -5,25 +5,21 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class AuthStore extends NotifierStore<Exception, String> {
-  AuthStore() : super('');
+  AuthStore(String token) : super(token);
 
   Future<void> login(
-      String? tiaOrDrt, String? password, Profile? profile) async {
+      String tiaOrDrt, String password) async {
     setLoading(true);
     try {
       Map<String, dynamic> json = {
-        'num_matricula': tiaOrDrt,
+        'num_identificacao': tiaOrDrt,
         'password': password,
       };
-      String profilePath = profile == Profile.aluno ? 'alunos' : 'funcionarios';
       UserRepository repo = Modular.get();
-      String? loggedUser = await repo.login(json, profilePath);
-      if (loggedUser != null && loggedUser == 'OK') {
-        update(loggedUser);
-        Modular.to.navigate('/panel/', arguments: <String, dynamic>{
-          'userId': json['num_matricula'],
-          'profile': profilePath,
-        });
+      String? token = await repo.login(json);
+      if (token != null) {
+        update(token);
+        Modular.to.navigate('/panel/');
       } else {
         setError(LoginException('Usuário ou senha incorretos'));
       }
@@ -33,4 +29,6 @@ class AuthStore extends NotifierStore<Exception, String> {
       setLoading(false);
     }
   }
+
+  String getToken() => state;
 }

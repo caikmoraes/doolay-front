@@ -1,13 +1,22 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:doolay_front/app/modules/auth/auth_store.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 
 class WebClient {
+
   final baseUrl = 'https://doolay.herokuapp.com';
 
   Future<http.Response> executeGet(String path) async {
+    AuthStore store = Modular.get();
+    String token = store.getToken();
+    if(token.isEmpty) Modular.to.pushReplacementNamed('/auth');
     var url = Uri.parse('$baseUrl/$path');
-    var response = await http.get(url);
+    var response = await http.get(url, headers: {
+      HttpHeaders.authorizationHeader: 'Token $token',
+    });
     return response;
   }
 

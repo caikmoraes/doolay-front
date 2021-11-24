@@ -2,7 +2,7 @@ import 'package:doolay_front/app/shared/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HelloWidget extends StatelessWidget {
-  final User user;
+  final UserModel user;
   const HelloWidget({
     Key? key,
     required this.user,
@@ -23,7 +23,7 @@ class HelloWidget extends StatelessWidget {
           ),
           const SizedBox(width: 24),
           Text(
-              'Oi, ${user.firstName}! ${user.lastLogin == null ? 'Seja bem-vindo ao Doolay :)' : 'Seu último acesso foi em ${user.lastLogin!.day}/${user.lastLogin!.month}/${user.lastLogin!.year}'}'),
+              'Oi, ${user.name}! Seja bem-vindo ao Doolay :)'),
         ],
       ),
     );

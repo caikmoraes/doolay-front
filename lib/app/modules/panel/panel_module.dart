@@ -17,9 +17,7 @@ class PanelModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(
       '/',
-      child: (_, args) => PanelPage(
-        userMap: args.data,
-      ),
+      child: (_, args) => const PanelPage(),
     ),
     ModuleRoute('/user', module: UserModule()),
   ];

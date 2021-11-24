@@ -8,4 +8,5 @@ class AppConstants {
   static const BACKGROUND_SAUDE = 'images/backgroundEstadoSaude.png';
   static const GITHUB_ICON = 'images/github.svg';
   static const DOOLAY_ANIMATION = 'animations/doolay_animation.riv';
+  static const BASE_URL = 'https://doolay.herokuapp.com';
 }

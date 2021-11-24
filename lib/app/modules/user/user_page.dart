@@ -5,6 +5,7 @@ import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
+import 'package:doolay_front/app/shared/model/new_user.dart';
 import 'package:doolay_front/app/shared/utils/form_utils.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_button.dart';
@@ -20,12 +21,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+
 class UserPage extends StatefulWidget {
   final String title;
+
   const UserPage({
     Key? key,
     this.title = 'UserPage',
   }) : super(key: key);
+
   @override
   UserPageState createState() => UserPageState();
 }
@@ -69,10 +73,6 @@ class _UserFormState extends State<UserForm> {
 
   Profile? profile = Profile.aluno;
 
-  clearControllers() {
-    tiaOrDrtCtr.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return FormBase(
@@ -102,7 +102,6 @@ class _UserFormState extends State<UserForm> {
                             currentValue: profile,
                             label: 'Aluno',
                             onSelect: (Profile? value) => setState(() {
-                              clearControllers();
                               profile = value;
                             }),
                           ),
@@ -112,7 +111,6 @@ class _UserFormState extends State<UserForm> {
                             currentValue: profile,
                             label: 'Funcionario',
                             onSelect: (Profile? value) => setState(() {
-                              clearControllers();
                               profile = value;
                             }),
                           ),
@@ -123,11 +121,11 @@ class _UserFormState extends State<UserForm> {
                         ? Row(
                             children: [
                               Expanded(
-                                child: FormUtils.showTiaOrDrt(
-                                  profile!,
-                                  tiaOrDrtCtr,
-                                  (value) => value == null
-                                      ? 'Preencha seu TIA ou DRT.'
+                                child: DoolayTextField(
+                                  controller: tiaOrDrtCtr,
+                                  label: 'Preencha o TIA ou DRT',
+                                  validator: (value) => value == null
+                                      ? 'Campo obrigatório'
                                       : null,
                                 ),
                               ),
@@ -155,12 +153,11 @@ class _UserFormState extends State<UserForm> {
                           )
                         : Column(
                             children: [
-                              FormUtils.showTiaOrDrt(
-                                profile!,
-                                tiaOrDrtCtr,
-                                (value) => value == null
-                                    ? 'Preencha seu TIA ou DRT.'
-                                    : null,
+                              DoolayTextField(
+                                controller: tiaOrDrtCtr,
+                                label: 'Preencha o TIA ou DRT',
+                                validator: (value) =>
+                                    value == null ? 'Campo obrigatório' : null,
                               ),
                               const SizedBox(height: 16),
                               DoolayDatePicker(
@@ -183,37 +180,22 @@ class _UserFormState extends State<UserForm> {
                             ],
                           ),
                     const SizedBox(height: 16),
-                    DoolaySelectField(
-                      arrayValues: const ['Administrativo', 'Financeiro'],
-                      onChange: (String? value) {
-                        if (value != null) {
-                          setState(() {
-                            setorCtr.text = value;
-                          });
-                        }
-                      },
-                      label: 'Setor',
-                    ),
                     const SizedBox(height: 16),
                     Row(
                       children: [
                         Expanded(
                           flex: 2,
-                          child: DoolaySelectField(
-                              arrayValues: const ['Osasco', 'São Paulo'],
-                              onChange: (String? value) {
-                                if (value != null) {
-                                  setState(() {
-                                    cidadeCtr.text = value;
-                                  });
-                                }
-                              },
-                              label: 'Cidade'),
+                          child: DoolayTextField(
+                            controller: cidadeCtr,
+                            label: 'Cidade',
+                            validator: (value) =>
+                                value == null ? 'Campo obrigatório' : null,
+                          ),
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: DoolaySelectField(
-                              arrayValues: const ['SP', 'RJ'],
+                              arrayValues: getUFs(),
                               onChange: (String? value) {
                                 if (value != null) {
                                   setState(() {
@@ -259,23 +241,7 @@ class _UserFormState extends State<UserForm> {
                               text: 'Cadastrar',
                               onTap: () async {
                                 debugger();
-                                Map<String, dynamic> json = <String, dynamic>{
-                                  "first_name": fullNameCtr.text.split(' ')[0],
-                                  "last_name": fullNameCtr.text.split(' ')[1],
-                                  profile == Profile.aluno
-                                      ? 'num_matricula'
-                                      : 'num_funcional': tiaOrDrtCtr.text,
-                                  "password":
-                                      '${fullNameCtr.text.split(' ')[0]}.${fullNameCtr.text.split(' ')[1]}${DateTime.now().year}',
-                                  "setor": setorCtr.text,
-                                  "cidade": cidadeCtr.text,
-                                  "estado": estadoCtr.text,
-                                };
-                                store.saveNewUser(
-                                    json,
-                                    profile == Profile.aluno
-                                        ? 'alunos'
-                                        : 'funcionarios');
+                                cadastrarUsuario();
                               },
                             ),
                           ],
@@ -288,21 +254,7 @@ class _UserFormState extends State<UserForm> {
                           DoolayButton(
                             text: 'Cadastrar',
                             onTap: () async {
-                              Map<String, dynamic> json = <String, dynamic>{
-                                "first_name": fullNameCtr.text.split(' ')[0],
-                                "last_name": fullNameCtr.text.split(' ')[1],
-                                "num_funcional": tiaOrDrtCtr.text,
-                                "password":
-                                    '${fullNameCtr.text.split(' ')[0]}.${fullNameCtr.text.split(' ')[1]}${DateTime.now().year}',
-                                "setor": setorCtr.text,
-                                "cidade": cidadeCtr.text,
-                                "estado": estadoCtr.text,
-                              };
-                              store.saveNewUser(
-                                  json,
-                                  profile == Profile.aluno
-                                      ? 'alunos'
-                                      : 'funcionarios');
+                              cadastrarUsuario();
                             },
                           ),
                         ],
@@ -316,5 +268,51 @@ class _UserFormState extends State<UserForm> {
         ),
       ),
     );
+  }
+
+  getUFs() => [
+        'AC',
+        'AL',
+        'AP',
+        'AM',
+        'BA',
+        'CE',
+        'DF',
+        'ES',
+        'GO',
+        'MA',
+        'MS',
+        'MT',
+        'MG',
+        'PA',
+        'PB',
+        'PR',
+        'PE',
+        'PI',
+        'RJ',
+        'RN',
+        'RS',
+        'RO',
+        'RR',
+        'SC',
+        'SP',
+        'SE',
+        'TO',
+      ];
+
+  void cadastrarUsuario() {
+    NewUser newUser = NewUser(
+      name: fullNameCtr.text,
+      cidade: cidadeCtr.text,
+      dataNascimento: DateTime.parse(dataNascimentoCtr.text),
+      estado: estadoCtr.text,
+      numIdentificacao: tiaOrDrtCtr.text,
+      password: senhaCtr.text,
+      setor: setorCtr.text,
+      tipoUsuario: profile == Profile.aluno? 'ALU' : 'FUN',
+    );
+    var json = newUser.toJson();
+    store.saveNewUser(
+        json);
   }
 }
