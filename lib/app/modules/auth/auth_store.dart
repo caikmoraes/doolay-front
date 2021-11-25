@@ -1,4 +1,3 @@
-import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/exceptions/login_exception.dart';
 import 'package:doolay_front/app/shared/repositories/user_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';

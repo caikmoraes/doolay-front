@@ -1,4 +1,3 @@
-import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/features/panel_features.dart';
 import 'package:doolay_front/app/shared/model/user_model.dart';

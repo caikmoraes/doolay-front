@@ -1,12 +1,10 @@
-import 'dart:developer';
-
+import 'package:doolay_front/app/modules/setor/setor_store.dart';
 import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/model/new_user.dart';
-import 'package:doolay_front/app/shared/utils/form_utils.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_button.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_date_picker.dart';
@@ -20,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
+import 'package:intl/intl.dart';
 
 class UserPage extends StatefulWidget {
   final String title;
@@ -70,8 +68,16 @@ class _UserFormState extends State<UserForm> {
   final TextEditingController cidadeCtr = TextEditingController();
   final TextEditingController estadoCtr = TextEditingController();
   final UserStore store = Modular.get();
+  final SetorStore setorStore = Modular.get();
 
   Profile? profile = Profile.aluno;
+  int setor = 0;
+
+  @override
+  void initState() {
+    setorStore.fetchSetores();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +136,25 @@ class _UserFormState extends State<UserForm> {
                                 ),
                               ),
                               const SizedBox(width: 8),
+                              ScopedBuilder(
+                                store: setorStore,
+                                onError: (context, error) =>
+                                    DoolayErrorAlert(text: '$error'),
+                                onLoading: (context) => const LinearProgressIndicator(),
+                                onState: (context, state) {
+                                  if (state is ListSetor) {
+                                    return DoolaySelectSetorField(
+                                        arrayValues: state.setores ?? [],
+                                        onChange: (Setor? value) =>
+                                            setState(() {
+                                              setor = value?.id ?? 0;
+                                            }),
+                                        label: 'Setor');
+                                  }
+                                  return Container();
+                                },
+                              ),
+                              const SizedBox(width: 8),
                               Expanded(
                                 child: DoolayDatePicker(
                                   controller: dataNascimentoCtr,
@@ -160,6 +185,27 @@ class _UserFormState extends State<UserForm> {
                                     value == null ? 'Campo obrigatório' : null,
                               ),
                               const SizedBox(height: 16),
+                              ScopedBuilder(
+                                store: setorStore,
+                                onError: (context, error) =>
+                                    DoolayErrorAlert(text: '$error'),
+                                onLoading: (context) => const Expanded(
+                                  child: LinearProgressIndicator(),
+                                ),
+                                onState: (context, state) {
+                                  if (state is ListSetor) {
+                                    return DoolaySelectSetorField(
+                                        arrayValues: state.setores ?? [],
+                                        onChange: (Setor? value) =>
+                                            setState(() {
+                                              setor = value?.id ?? 0;
+                                            }),
+                                        label: 'Setor');
+                                  }
+                                  return Container();
+                                },
+                              ),
+                              const SizedBox(height: 16),
                               DoolayDatePicker(
                                 controller: dataNascimentoCtr,
                                 label: 'Data de Nascimento',
@@ -179,7 +225,6 @@ class _UserFormState extends State<UserForm> {
                               ),
                             ],
                           ),
-                    const SizedBox(height: 16),
                     const SizedBox(height: 16),
                     Row(
                       children: [
@@ -210,10 +255,10 @@ class _UserFormState extends State<UserForm> {
                     const SizedBox(height: 16),
                     ScopedBuilder(
                       store: store,
-                      onState: (context, state) {
+                      onState: (context, NewUser state) {
                         return Column(
                           children: [
-                            if (state == 1)
+                            if (state.numIdentificacao != null)
                               Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
@@ -240,7 +285,6 @@ class _UserFormState extends State<UserForm> {
                             DoolayButton(
                               text: 'Cadastrar',
                               onTap: () async {
-                                debugger();
                                 cadastrarUsuario();
                               },
                             ),
@@ -301,18 +345,18 @@ class _UserFormState extends State<UserForm> {
       ];
 
   void cadastrarUsuario() {
+    DateFormat format = DateFormat('dd/MM/yyyy');
     NewUser newUser = NewUser(
       name: fullNameCtr.text,
       cidade: cidadeCtr.text,
-      dataNascimento: DateTime.parse(dataNascimentoCtr.text),
+      dataNascimento: format.parse(dataNascimentoCtr.text),
       estado: estadoCtr.text,
       numIdentificacao: tiaOrDrtCtr.text,
       password: senhaCtr.text,
       setor: setorCtr.text,
-      tipoUsuario: profile == Profile.aluno? 'ALU' : 'FUN',
+      tipoUsuario: profile == Profile.aluno ? 'ALU' : 'FUN',
     );
     var json = newUser.toJson();
-    store.saveNewUser(
-        json);
+    store.saveNewUser(json);
   }
 }

@@ -12,7 +12,7 @@ class WebClient {
   Future<http.Response> executeGet(String path) async {
     AuthStore store = Modular.get();
     String token = store.getToken();
-    if(token.isEmpty) Modular.to.pushReplacementNamed('/auth');
+    if(token.isEmpty) Modular.to.pushReplacementNamed('/auth/');
     var url = Uri.parse('$baseUrl/$path');
     var response = await http.get(url, headers: {
       HttpHeaders.authorizationHeader: 'Token $token',
@@ -22,6 +22,9 @@ class WebClient {
 
   Future<http.Response> executePost(
       {required String path, required Map<String, dynamic> json}) async {
+    AuthStore store = Modular.get();
+    String token = store.getToken();
+    if(token.isEmpty) Modular.to.pushReplacementNamed('/auth/');
     var url = Uri.parse('$baseUrl/$path');
     var response = await http.post(
       url,

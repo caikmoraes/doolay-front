@@ -1,7 +1,6 @@
 import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
-import 'package:doolay_front/app/shared/utils/form_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';

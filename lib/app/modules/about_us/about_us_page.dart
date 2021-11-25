@@ -37,7 +37,7 @@ class AboutUsPageState extends State<AboutUsPage> {
           const SizedBox(height: 32),
           const DoolayPageHeader(text: 'Quem somos nós?'),
           const SizedBox(height: 16),
-          Container(
+          SizedBox(
             width: width,
             child: const Text(
               'Cursando o 5° Semestre de Sistemas de Informação na UPM (Universidade Presbiteriana Mackenzie), somos um time formado de dois desenvolvedores dois desenvolvedores fullstack, um desenvolvedor back-end e uma desenvolvedore front-end. Focados em desenvolver a melhor experiência para os usuários desta plataforma desenvolvida para nos ajudar nesse momento delicado que estamos vivendo por conta da Covid-19.',

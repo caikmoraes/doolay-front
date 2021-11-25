@@ -39,7 +39,7 @@ class NewUser {
       'password': password,
       'cidade':cidade,
       'estado':estado,
-      'data_nascimento': '${dataNascimento?.year}/${dataNascimento?.month}/${dataNascimento?.day}'
+      'data_nascimento': '${dataNascimento?.year}-${dataNascimento?.month}-${dataNascimento?.day}'
     };
     return data;
   }

@@ -1,6 +1,5 @@
 import 'package:doolay_front/app/shared/model/covid_data.dart';
 import 'package:doolay_front/app/shared/web/web_client.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class CovidCasesStore extends NotifierStore<Exception, int> {

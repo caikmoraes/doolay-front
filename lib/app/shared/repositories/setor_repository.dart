@@ -6,13 +6,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class SetorRepository {
   WebClient client = Modular.get();
+
   Future<List<Setor>?> fetchAll() async {
-    var path = 'setor';
+    var path = 'setor/';
     var response = await client.executeGet(path);
-    if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
-      List<Setor> list = Setor.fromJsonToList(json);
-      return list;
-    }
+    var json = jsonDecode(response.body);
+    List<Setor> list = Setor.fromJsonToList(json);
+    return list;
   }
 }

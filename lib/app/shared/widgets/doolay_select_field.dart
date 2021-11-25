@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:flutter/material.dart';
 
 class DoolaySelectField extends StatefulWidget {
@@ -35,6 +36,51 @@ class _DoolaySelectFieldState extends State<DoolaySelectField> {
           )
           .toList(),
       onChanged: (String? newValue) {
+        setState(() {
+          value = newValue;
+        });
+        widget.onChange(newValue);
+      },
+    );
+  }
+}
+
+
+class DoolaySelectSetorField extends StatefulWidget {
+  final List<Setor> arrayValues;
+  final Function onChange;
+  final String label;
+  const DoolaySelectSetorField({
+    Key? key,
+    required this.arrayValues,
+    required this.onChange,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  _DoolaySelectSetorFieldState createState() => _DoolaySelectSetorFieldState();
+}
+
+class _DoolaySelectSetorFieldState extends State<DoolaySelectSetorField> {
+  Setor? value;
+  @override
+  Widget build(BuildContext context) {
+    List<Setor> list = widget.arrayValues;
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: widget.label,
+      ),
+      value: value,
+      items: list
+          .map(
+            (item) => DropdownMenuItem<Setor>(
+          value: item,
+          child: Text(item.nome!),
+        ),
+      )
+          .toList(),
+      onChanged: (Setor? newValue) {
         setState(() {
           value = newValue;
         });

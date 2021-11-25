@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/model/new_user.dart';
 import 'package:doolay_front/app/shared/model/user_model.dart';
 import 'package:doolay_front/app/shared/web/web_client.dart';
@@ -45,10 +43,10 @@ class UserRepository {
 
   Future<NewUser?> saveNewUser(Map<String, dynamic> newUserJson) async {
     WebClient client = Modular.get();
-    debugger();
     var path = 'auth/users/';
     try {
-      Response response = await client.executePost(json: newUserJson, path: path);
+      Response response =
+          await client.executePost(json: newUserJson, path: path);
       var json = jsonDecode(response.body);
       return NewUser.fromJson(json);
     } catch (e) {

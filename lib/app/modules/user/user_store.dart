@@ -40,13 +40,13 @@ class Setor {
     nome = json['nome'];
   }
 
-  static List<Setor> fromJsonToList(List<Map<String, dynamic>> json) {
+  static List<Setor> fromJsonToList(List<dynamic> json) {
     List<Setor> list = [];
-    json.forEach(
-      (el) => list.add(
+    for (var el in json) {
+      list.add(
         Setor(id: el['id'], nome: el['nome']),
-      ),
-    );
+      );
+    }
     return list;
   }
 }
