@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doolay_front/app/modules/setor/setor_store.dart';
 import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:doolay_front/app/shared/app_constants.dart';
@@ -71,7 +73,7 @@ class _UserFormState extends State<UserForm> {
   final SetorStore setorStore = Modular.get();
 
   Profile? profile = Profile.aluno;
-  int setor = 0;
+  Setor? currentSetor;
 
   @override
   void initState() {
@@ -136,23 +138,28 @@ class _UserFormState extends State<UserForm> {
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              ScopedBuilder(
-                                store: setorStore,
-                                onError: (context, error) =>
-                                    DoolayErrorAlert(text: '$error'),
-                                onLoading: (context) => const LinearProgressIndicator(),
-                                onState: (context, state) {
-                                  if (state is ListSetor) {
-                                    return DoolaySelectSetorField(
-                                        arrayValues: state.setores ?? [],
-                                        onChange: (Setor? value) =>
-                                            setState(() {
-                                              setor = value?.id ?? 0;
-                                            }),
-                                        label: 'Setor');
-                                  }
-                                  return Container();
-                                },
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ScopedBuilder(
+                                      store: setorStore,
+                                      onError: (context, error) =>
+                                          DoolayErrorAlert(text: '$error'),
+                                      onLoading: (context) => const LinearProgressIndicator(),
+                                      onState: (context, state) {
+                                        if (state is ListSetor) {
+                                          return DoolaySelectSetorField(
+                                              arrayValues: state.setores ?? [],
+                                              onChange: (Setor? value) => setState((){
+                                                currentSetor = value;
+                                              }),
+                                              label: 'Setor');
+                                        }
+                                        return Container();
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(width: 8),
                               Expanded(
@@ -185,25 +192,28 @@ class _UserFormState extends State<UserForm> {
                                     value == null ? 'Campo obrigatório' : null,
                               ),
                               const SizedBox(height: 16),
-                              ScopedBuilder(
-                                store: setorStore,
-                                onError: (context, error) =>
-                                    DoolayErrorAlert(text: '$error'),
-                                onLoading: (context) => const Expanded(
-                                  child: LinearProgressIndicator(),
-                                ),
-                                onState: (context, state) {
-                                  if (state is ListSetor) {
-                                    return DoolaySelectSetorField(
-                                        arrayValues: state.setores ?? [],
-                                        onChange: (Setor? value) =>
-                                            setState(() {
-                                              setor = value?.id ?? 0;
-                                            }),
-                                        label: 'Setor');
-                                  }
-                                  return Container();
-                                },
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ScopedBuilder(
+                                      store: setorStore,
+                                      onError: (context, error) =>
+                                          DoolayErrorAlert(text: '$error'),
+                                      onLoading: (context) => const LinearProgressIndicator(),
+                                      onState: (context, state) {
+                                        if (state is ListSetor) {
+                                          return DoolaySelectSetorField(
+                                              arrayValues: state.setores ?? [],
+                                              onChange: (Setor? value) => setState((){
+                                                currentSetor = value;
+                                              }),
+                                              label: 'Setor');
+                                        }
+                                        return Container();
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 16),
                               DoolayDatePicker(
@@ -345,6 +355,7 @@ class _UserFormState extends State<UserForm> {
       ];
 
   void cadastrarUsuario() {
+    debugger();
     DateFormat format = DateFormat('dd/MM/yyyy');
     NewUser newUser = NewUser(
       name: fullNameCtr.text,

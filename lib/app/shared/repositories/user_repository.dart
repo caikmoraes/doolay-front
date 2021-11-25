@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:doolay_front/app/shared/model/new_user.dart';
 import 'package:doolay_front/app/shared/model/user_model.dart';
@@ -45,6 +46,7 @@ class UserRepository {
     WebClient client = Modular.get();
     var path = 'auth/users/';
     try {
+      debugger();
       Response response =
           await client.executePost(json: newUserJson, path: path);
       var json = jsonDecode(response.body);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doolay_front/app/shared/model/new_user.dart';
 import 'package:doolay_front/app/shared/repositories/setor_repository.dart';
 import 'package:doolay_front/app/shared/repositories/user_repository.dart';
@@ -11,6 +13,7 @@ class UserStore extends NotifierStore<Exception, NewUser> {
   Future saveNewUser(Map<String, dynamic> json) async {
     setLoading(true);
     try {
+      debugger();
       UserRepository repo = Modular.get();
       NewUser? newUser = await repo.saveNewUser(json);
       update(newUser!);
@@ -49,4 +52,7 @@ class Setor {
     }
     return list;
   }
+
+  @override
+  String toString() => nome!;
 }

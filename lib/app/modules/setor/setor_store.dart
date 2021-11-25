@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:doolay_front/app/shared/repositories/setor_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +15,12 @@ class ListSetor extends SetorState{
 
   ListSetor({this.setores});
 
+}
+
+class CurrentSetor extends SetorState{
+  Setor? setor;
+
+  CurrentSetor({this.setor});
 }
 
 class SetorStore extends NotifierStore<Exception, SetorState> {

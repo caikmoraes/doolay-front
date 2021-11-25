@@ -47,7 +47,7 @@ class _DoolaySelectFieldState extends State<DoolaySelectField> {
 
 
 class DoolaySelectSetorField extends StatefulWidget {
-  final List<Setor> arrayValues;
+  final List<Object?> arrayValues;
   final Function onChange;
   final String label;
   const DoolaySelectSetorField({
@@ -62,10 +62,10 @@ class DoolaySelectSetorField extends StatefulWidget {
 }
 
 class _DoolaySelectSetorFieldState extends State<DoolaySelectSetorField> {
-  Setor? value;
+  Object? value;
   @override
   Widget build(BuildContext context) {
-    List<Setor> list = widget.arrayValues;
+    List<Object?> list = widget.arrayValues;
     return DropdownButtonFormField(
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
@@ -74,13 +74,13 @@ class _DoolaySelectSetorFieldState extends State<DoolaySelectSetorField> {
       value: value,
       items: list
           .map(
-            (item) => DropdownMenuItem<Setor>(
+            (item) => DropdownMenuItem<Object>(
           value: item,
-          child: Text(item.nome!),
+          child: Text('$item'),
         ),
       )
           .toList(),
-      onChanged: (Setor? newValue) {
+      onChanged: (Object? newValue) {
         setState(() {
           value = newValue;
         });
