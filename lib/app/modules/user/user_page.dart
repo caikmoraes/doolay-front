@@ -137,29 +137,14 @@ class _UserFormState extends State<UserForm> {
                                       : null,
                                 ),
                               ),
-                              const SizedBox(width: 8),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ScopedBuilder(
-                                      store: setorStore,
-                                      onError: (context, error) =>
-                                          DoolayErrorAlert(text: '$error'),
-                                      onLoading: (context) => const LinearProgressIndicator(),
-                                      onState: (context, state) {
-                                        if (state is ListSetor) {
-                                          return DoolaySelectSetorField(
-                                              arrayValues: state.setores ?? [],
-                                              onChange: (Setor? value) => setState((){
-                                                currentSetor = value;
-                                              }),
-                                              label: 'Setor');
-                                        }
-                                        return Container();
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              Expanded(
+                                child: DoolayTextField(
+                                  controller: senhaCtr,
+                                  label: 'Senha',
+                                  validator: (value) => value == null
+                                      ? 'Campo obrigatório'
+                                      : null,
+                                ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
@@ -192,6 +177,13 @@ class _UserFormState extends State<UserForm> {
                                     value == null ? 'Campo obrigatório' : null,
                               ),
                               const SizedBox(height: 16),
+                              DoolayTextField(
+                                controller: senhaCtr,
+                                label: 'Senha',
+                                validator: (value) =>
+                                value == null ? 'Campo obrigatório' : null,
+                              ),
+                              const SizedBox(height: 16),
                               Row(
                                 children: [
                                   Expanded(
@@ -199,14 +191,16 @@ class _UserFormState extends State<UserForm> {
                                       store: setorStore,
                                       onError: (context, error) =>
                                           DoolayErrorAlert(text: '$error'),
-                                      onLoading: (context) => const LinearProgressIndicator(),
+                                      onLoading: (context) =>
+                                          const LinearProgressIndicator(),
                                       onState: (context, state) {
                                         if (state is ListSetor) {
                                           return DoolaySelectSetorField(
                                               arrayValues: state.setores ?? [],
-                                              onChange: (Setor? value) => setState((){
-                                                currentSetor = value;
-                                              }),
+                                              onChange: (Setor? value) =>
+                                                  setState(() {
+                                                    currentSetor = value;
+                                                  }),
                                               label: 'Setor');
                                         }
                                         return Container();
@@ -238,6 +232,29 @@ class _UserFormState extends State<UserForm> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
+                        if (ResponsiveTool.isLargeScreen(context)) ...[
+                          Expanded(
+                            child: ScopedBuilder(
+                              store: setorStore,
+                              onError: (context, error) =>
+                                  DoolayErrorAlert(text: '$error'),
+                              onLoading: (context) =>
+                                  const LinearProgressIndicator(),
+                              onState: (context, state) {
+                                if (state is ListSetor) {
+                                  return DoolaySelectSetorField(
+                                      arrayValues: state.setores ?? [],
+                                      onChange: (Setor? value) => setState(() {
+                                            currentSetor = value;
+                                          }),
+                                      label: 'Setor');
+                                }
+                                return Container();
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
                         Expanded(
                           flex: 2,
                           child: DoolayTextField(
@@ -292,6 +309,7 @@ class _UserFormState extends State<UserForm> {
                                   ],
                                 ),
                               ),
+                            const SizedBox(height: 16),
                             DoolayButton(
                               text: 'Cadastrar',
                               onTap: () async {
@@ -305,6 +323,7 @@ class _UserFormState extends State<UserForm> {
                       onError: (context, error) => Column(
                         children: [
                           DoolayErrorAlert(text: '$error'),
+                          const SizedBox(height: 16),
                           DoolayButton(
                             text: 'Cadastrar',
                             onTap: () async {
@@ -364,10 +383,19 @@ class _UserFormState extends State<UserForm> {
       estado: estadoCtr.text,
       numIdentificacao: tiaOrDrtCtr.text,
       password: senhaCtr.text,
-      setor: setorCtr.text,
-      tipoUsuario: profile == Profile.aluno ? 'ALU' : 'FUN',
+      setor: '${currentSetor?.id}',
+      tipoUsuario: getTipoUsuario(profile),
     );
     var json = newUser.toJson();
     store.saveNewUser(json);
+  }
+
+  String getTipoUsuario(Profile? profile) {
+    if(profile == Profile.aluno){
+      return "ALU";
+    } else if(profile == Profile.funcionario) {
+      return "FUN";
+    }
+    return "";
   }
 }

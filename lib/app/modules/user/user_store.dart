@@ -13,7 +13,6 @@ class UserStore extends NotifierStore<Exception, NewUser> {
   Future saveNewUser(Map<String, dynamic> json) async {
     setLoading(true);
     try {
-      debugger();
       UserRepository repo = Modular.get();
       NewUser? newUser = await repo.saveNewUser(json);
       update(newUser!);

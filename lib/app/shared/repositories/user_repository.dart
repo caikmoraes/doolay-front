@@ -45,14 +45,13 @@ class UserRepository {
   Future<NewUser?> saveNewUser(Map<String, dynamic> newUserJson) async {
     WebClient client = Modular.get();
     var path = 'auth/users/';
-    try {
-      debugger();
-      Response response =
-          await client.executePost(json: newUserJson, path: path);
-      var json = jsonDecode(response.body);
-      return NewUser.fromJson(json);
-    } catch (e) {
-      debugPrint('$e');
+    Response response = await client.executePost(json: newUserJson, path: path);
+    var json = jsonDecode(response.body);
+    if (response.statusCode == 400) {
+      if (json['num_identificacao'] != null) {
+        throw Exception('TIA ou DRT já existe.');
+      }
     }
+    return NewUser.fromJson(json);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class NewUser {
   String? numIdentificacao;
   String? name;
@@ -22,7 +24,7 @@ class NewUser {
   NewUser.fromJson(Map<String, dynamic> json) {
     numIdentificacao = json['num_identificacao'];
     name = json['name'];
-    setor = json['setor'];
+    setor = '${json['setor']}';
     tipoUsuario = json['tipo_usuario'];
     password = json['password'];
     cidade = json['cidade'];
@@ -35,7 +37,7 @@ class NewUser {
       'num_identificacao': numIdentificacao,
       'name': name,
       'setor': setor,
-      'tipoUsuario': tipoUsuario,
+      'tipo_usuario': tipoUsuario,
       'password': password,
       'cidade':cidade,
       'estado':estado,
