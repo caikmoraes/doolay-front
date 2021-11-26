@@ -27,4 +27,6 @@ class PanelStore extends StreamStore<Exception, UserModel> {
   }
 
   String? getUser() => state.numIdentificacao;
+
+  String? getTipoUsuario() => state.tipoUsuario;
 }

@@ -57,15 +57,35 @@ class PanelPageState extends State<PanelPage> {
               ),
               Wrap(
                 alignment: WrapAlignment.center,
-                children: getFeatures(context)
-                    .map(
-                      (e) => DoolayFeature(
-                        icon: e.icon,
-                        description: e.description,
-                        route: e.route!,
-                      ),
-                    )
-                    .toList(),
+                children: store.getTipoUsuario() == 'ADM'
+                    ? getAdmFeatures()
+                        .map(
+                          (e) => DoolayFeature(
+                            icon: e.icon,
+                            description: e.description,
+                            route: e.route!,
+                          ),
+                        )
+                        .toList()
+                    : store.getTipoUsuario() == 'GES'
+                        ? getGestorFeatures()
+                            .map(
+                              (e) => DoolayFeature(
+                                icon: e.icon,
+                                description: e.description,
+                                route: e.route!,
+                              ),
+                            )
+                            .toList()
+                        : getMemberFeatures()
+                            .map(
+                              (e) => DoolayFeature(
+                                icon: e.icon,
+                                description: e.description,
+                                route: e.route!,
+                              ),
+                            )
+                            .toList(),
               ),
             ],
           ),

@@ -95,7 +95,7 @@ class HealthPageState extends State<HealthPage> {
                 const SizedBox(height: 16),
                 Center(
                   child: Text(
-                    'Se sim, o que você está sentindo?',
+                    'Se não estiver se sentindo bem, o que você está sentindo?',
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
@@ -111,6 +111,7 @@ class HealthPageState extends State<HealthPage> {
                           builder: (context, constraints) {
                             return SizedBox(
                               child: GridView.count(
+                                physics: const BouncingScrollPhysics(),
                                 crossAxisCount:
                                     ResponsiveTool.isLargeScreen(context)
                                         ? 3
@@ -162,58 +163,6 @@ class HealthPageState extends State<HealthPage> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class HealthForm extends StatefulWidget {
-  const HealthForm({Key? key}) : super(key: key);
-
-  @override
-  _HealthFormState createState() => _HealthFormState();
-}
-
-class _HealthFormState extends State<HealthForm> {
-  final SintomasStore sintomasStore = Modular.get();
-
-  @override
-  void initState() {
-    sintomasStore.fetchSintomas();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FormBase(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const ArrowBackHeader(),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                child: Column(
-                  children: [
-                    const DoolayPageSubHeader(
-                        text: 'Como você está se sentindo hoje?'),
-                    ScopedBuilder(
-                      store: sintomasStore,
-                      onError: (context, error) =>
-                          DoolayErrorAlert(text: '$error'),
-                      onLoading: (context) =>
-                          const Center(child: LoadingScreen()),
-                      onState: (context, state) {
-                        return Container();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
