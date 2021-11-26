@@ -51,41 +51,45 @@ class PanelPageState extends State<PanelPage> {
                 store: store,
                 onLoading: (context) => const LoadingScreen(),
                 onError: (context, error) => DoolayErrorAlert(text: '$error'),
-                onState: (context, UserModel state) => HelloWidget(
-                  user: state,
+                onState: (context, UserModel state) => Column(
+                  children: [
+                    HelloWidget(
+                      user: state,
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      children: state.tipoUsuario == 'ADM'
+                          ? getAdmFeatures()
+                              .map(
+                                (e) => DoolayFeature(
+                                  icon: e.icon,
+                                  description: e.description,
+                                  route: e.route!,
+                                ),
+                              )
+                              .toList()
+                          : state.tipoUsuario == 'GES'
+                              ? getGestorFeatures()
+                                  .map(
+                                    (e) => DoolayFeature(
+                                      icon: e.icon,
+                                      description: e.description,
+                                      route: e.route!,
+                                    ),
+                                  )
+                                  .toList()
+                              : getMemberFeatures()
+                                  .map(
+                                    (e) => DoolayFeature(
+                                      icon: e.icon,
+                                      description: e.description,
+                                      route: e.route!,
+                                    ),
+                                  )
+                                  .toList(),
+                    ),
+                  ],
                 ),
-              ),
-              Wrap(
-                alignment: WrapAlignment.center,
-                children: store.getTipoUsuario() == 'ADM'
-                    ? getAdmFeatures()
-                        .map(
-                          (e) => DoolayFeature(
-                            icon: e.icon,
-                            description: e.description,
-                            route: e.route!,
-                          ),
-                        )
-                        .toList()
-                    : store.getTipoUsuario() == 'GES'
-                        ? getGestorFeatures()
-                            .map(
-                              (e) => DoolayFeature(
-                                icon: e.icon,
-                                description: e.description,
-                                route: e.route!,
-                              ),
-                            )
-                            .toList()
-                        : getMemberFeatures()
-                            .map(
-                              (e) => DoolayFeature(
-                                icon: e.icon,
-                                description: e.description,
-                                route: e.route!,
-                              ),
-                            )
-                            .toList(),
               ),
             ],
           ),

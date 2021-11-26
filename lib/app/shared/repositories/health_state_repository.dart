@@ -23,4 +23,11 @@ class HealthStateRepository {
     var json = jsonDecode(response.body);
     return ItemSymptom.fromJson(json);
   }
+
+  Future<List<UserHealthState>> fetchByUser(String userID) async {
+    var path = 'saude/estadosaude/user/$userID/';
+    var response = await client.executeGet(path);
+    var json = jsonDecode(response.body);
+    return UserHealthState.fromJsonToList(json);
+  }
 }

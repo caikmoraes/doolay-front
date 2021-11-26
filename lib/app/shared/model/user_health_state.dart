@@ -19,4 +19,18 @@ class UserHealthState {
         'user': user,
         'estado': estado,
       };
+
+  static Future<List<UserHealthState>> fromJsonToList(List<dynamic> jsonList) async{
+    List<UserHealthState> list = jsonList
+        .map(
+          (json) => UserHealthState(
+            id: json['id'],
+            user: json['user'],
+            estado: json['estado'],
+          ),
+        )
+        .toList();
+
+    return list;
+  }
 }

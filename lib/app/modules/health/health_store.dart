@@ -20,7 +20,7 @@ class HealthStore extends NotifierStore<Exception, int> {
       HealthStateRepository repo = Modular.get();
       UserHealthState state = UserHealthState(
         estado: healthState == HealthState.ok ? 'OK' : 'NOK',
-        user: panelStore.getUser(),
+        user: panelStore.getUserID(),
       );
       state = await repo.saveHealthState(state.toJson());
       if (state.id == null) throw Exception('Erro ao registrar estado de saúde');

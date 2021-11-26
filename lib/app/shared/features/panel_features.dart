@@ -1,6 +1,4 @@
-import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class Features {
   final String description;
@@ -23,7 +21,7 @@ List<Features> getMemberFeatures() => [
       Features(
         'Histórico de Registros',
         Icons.history,
-        route: '/history/',
+        route: './history/',
       ),
     ];
 

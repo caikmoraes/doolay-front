@@ -1,4 +1,5 @@
 import 'package:doolay_front/app/modules/health/health_module.dart';
+import 'package:doolay_front/app/modules/history/history_module.dart';
 import 'package:doolay_front/app/modules/panel/panel_page.dart';
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:doolay_front/app/modules/sintomas/sintomas_store.dart';
@@ -12,8 +13,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 class PanelModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.factory((i) => UserRepository()),
     Bind.lazySingleton((i) => PanelStore()),
+    Bind.factory((i) => UserRepository()),
     Bind.factory((i) => SintomasStore()),
     Bind.factory((i) => SintomasRepository()),
     Bind.factory((i) => HealthStateRepository()),
@@ -27,5 +28,6 @@ class PanelModule extends Module {
     ),
     ModuleRoute('/user', module: UserModule()),
     ModuleRoute('/health', module: HealthModule()),
+    ModuleRoute('/history', module: HistoryModule()),
   ];
 }
