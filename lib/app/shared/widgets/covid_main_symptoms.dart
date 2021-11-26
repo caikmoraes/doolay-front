@@ -22,7 +22,7 @@ class CovidMainSymptoms extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           ...getCommonSympomts().map(
-                (e) => Text('\u2022 ${e.description}'),
+                (e) => Text('\u2022 ${e.nome}'),
           ),
           const SizedBox(height: 8),
           const Text(
@@ -31,7 +31,7 @@ class CovidMainSymptoms extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           ...getRareSympomts().map(
-                (e) => Text('\u2022 ${e.description}'),
+                (e) => Text('\u2022 ${e.nome}'),
           ),
           const SizedBox(height: 8),
           const Text(
@@ -40,7 +40,7 @@ class CovidMainSymptoms extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           ...getDangerousSympomts().map(
-                (e) => Text('\u2022 ${e.description}'),
+                (e) => Text('\u2022 ${e.nome}'),
           ),
         ],
       ),
@@ -48,25 +48,25 @@ class CovidMainSymptoms extends StatelessWidget {
   }
 
   List<Symptoms> getCommonSympomts() => [
-    Symptoms('Febre'),
-    Symptoms('Tosse'),
-    Symptoms('Cansaço'),
-    Symptoms('Perda de paladar ou olfato'),
+    Symptoms(nome: 'Febre'),
+    Symptoms(nome: 'Tosse'),
+    Symptoms(nome: 'Cansaço'),
+    Symptoms(nome: 'Perda de paladar ou olfato'),
   ];
 
   List<Symptoms> getRareSympomts() => [
-    Symptoms('Dores de garganta'),
-    Symptoms('Dor de cabeça'),
-    Symptoms('Dores e desconfortos'),
-    Symptoms('Diarreia'),
+    Symptoms(nome: 'Dores de garganta'),
+    Symptoms(nome: 'Dor de cabeça'),
+    Symptoms(nome: 'Dores e desconfortos'),
+    Symptoms(nome: 'Diarreia'),
     Symptoms(
-        'Irritações na pele ou descoloração dos dedos dos pés ou das mãos'),
-    Symptoms('Olhos vermelhos ou irritados'),
+        nome: 'Irritações na pele ou descoloração dos dedos dos pés ou das mãos'),
+    Symptoms(nome: 'Olhos vermelhos ou irritados'),
   ];
 
   List<Symptoms> getDangerousSympomts() => [
-    Symptoms('Dificuldade para respirar ou falta de ar'),
-    Symptoms('Perda da fala, mobilidade ou confusão'),
-    Symptoms('Dores no peito'),
+    Symptoms(nome: 'Dificuldade para respirar ou falta de ar'),
+    Symptoms(nome: 'Perda da fala, mobilidade ou confusão'),
+    Symptoms(nome: 'Dores no peito'),
   ];
 }

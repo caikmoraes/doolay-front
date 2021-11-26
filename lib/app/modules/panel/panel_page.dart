@@ -1,6 +1,7 @@
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/features/panel_features.dart';
 import 'package:doolay_front/app/shared/model/user_model.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_feature.dart';
 import 'package:doolay_front/app/shared/widgets/hello_widget.dart';
 import 'package:doolay_front/app/shared/widgets/loading_screen.dart';

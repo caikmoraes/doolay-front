@@ -1,6 +1,7 @@
 import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/layout/style.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -20,7 +21,7 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
   TextEditingController tiaController = TextEditingController();
 
   TextEditingController passwordCtr = TextEditingController();
-
+  bool? selected = false;
   clearControllers() {
     tiaController.clear();
     passwordCtr.clear();
@@ -60,8 +61,11 @@ class _DoolayLoginFormState extends State<DoolayLoginForm> {
                 value == null || value.isEmpty ? 'Preencha sua senha.' : null,
           ),
           const SizedBox(height: 8),
-          const DoolayCheckBox(
+          DoolayCheckBox(
             text: 'Lembre-se de mim.',
+            action: (bool? value) => setState((){
+              selected = value;
+            }),
           ),
           const SizedBox(height: 8),
           ScopedBuilder(
@@ -115,68 +119,6 @@ class DoolayLoginButton extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class DoolayErrorAlert extends StatefulWidget {
-  final String text;
-
-  const DoolayErrorAlert({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  State<DoolayErrorAlert> createState() => _DoolayErrorAlertState();
-}
-
-class _DoolayErrorAlertState extends State<DoolayErrorAlert> {
-  bool showing = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Visibility(
-      visible: showing,
-      child: Row(
-        children: [
-          Expanded(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.red[100],
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(widget.text),
-                  ),
-                ),
-                Positioned(
-                  right: 8,
-                  top: 10,
-                  child: InkWell(
-                    child: const Icon(
-                      Icons.close,
-                      size: 16,
-                    ),
-                    onTap: () => setState(() {
-                      showing = !showing;
-                    }),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:doolay_front/app/shared/enum/profile.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:doolay_front/app/shared/model/new_user.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_button.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_date_picker.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_select_field.dart';
@@ -305,7 +306,7 @@ class _UserFormState extends State<UserForm> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(color: Colors.green),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),

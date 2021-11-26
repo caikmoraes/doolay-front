@@ -5,9 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class PanelStore extends StreamStore<Exception, UserModel> {
-  final UserModel initialState;
-
-  PanelStore(this.initialState) : super(initialState);
+  PanelStore() : super(UserModel());
 
   Future<UserModel?> fetchUserDetails() async {
     setLoading(true);
@@ -27,4 +25,6 @@ class PanelStore extends StreamStore<Exception, UserModel> {
     }
     return null;
   }
+
+  String? getUser() => state.numIdentificacao;
 }
