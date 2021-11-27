@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:doolay_front/app/shared/model/user_health_state.dart';
-import 'package:doolay_front/app/shared/model/user_model.dart';
 import 'package:doolay_front/app/shared/repositories/health_state_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';

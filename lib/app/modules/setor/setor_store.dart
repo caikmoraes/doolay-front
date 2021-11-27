@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:doolay_front/app/shared/repositories/setor_repository.dart';

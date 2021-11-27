@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:doolay_front/app/shared/model/new_user.dart';
 import 'package:doolay_front/app/shared/model/user_model.dart';

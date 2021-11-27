@@ -71,7 +71,7 @@ class DoolaySuccessAlert extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DoolayErrorAlert> createState() => _DoolayErrorAlertState();
+  State<DoolaySuccessAlert> createState() => _DoolaySuccessAlertState();
 }
 
 class _DoolaySuccessAlertState extends State<DoolaySuccessAlert> {

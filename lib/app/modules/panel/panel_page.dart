@@ -5,7 +5,6 @@ import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_feature.dart';
 import 'package:doolay_front/app/shared/widgets/hello_widget.dart';
 import 'package:doolay_front/app/shared/widgets/loading_screen.dart';
-import 'package:doolay_front/app/shared/widgets/login_form.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
 import 'package:flutter/material.dart';

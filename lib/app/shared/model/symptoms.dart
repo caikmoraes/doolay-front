@@ -13,6 +13,11 @@ class Symptoms {
 
     return list;
   }
+
+  Symptoms.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nome = json['nome'];
+  }
 }
 
 class ItemSymptom {
@@ -41,4 +46,9 @@ class ItemSymptom {
         'apresenta': '$apresenta',
       };
 
+  static List<ItemSymptom>? fromJsonToList(List<dynamic> json) => json
+      .map(
+        (j) => ItemSymptom.fromJson(j),
+      )
+      .toList();
 }

@@ -1,4 +1,3 @@
-import 'package:doolay_front/app/modules/user/user_store.dart';
 import 'package:flutter/material.dart';
 
 class DoolaySelectField extends StatefulWidget {

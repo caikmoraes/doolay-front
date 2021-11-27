@@ -1,18 +1,25 @@
+import 'package:doolay_front/app/shared/model/symptoms.dart';
+
 class UserHealthState {
   int? id;
   String? user;
   String? estado;
+  List<ItemSymptom>? sintomas;
 
   UserHealthState({
     this.id,
     this.user,
     this.estado,
+    this.sintomas,
   });
 
   UserHealthState.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     user = json['user'];
     estado = json['estado'];
+    if(json['sintomas'] != null) {
+      sintomas = ItemSymptom.fromJsonToList(json['sintomas']);
+    }
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{

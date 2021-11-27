@@ -1,9 +1,9 @@
 import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
+import 'package:doolay_front/app/shared/layout/style.dart';
 import 'package:doolay_front/app/shared/model/user_health_state.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
-import 'package:doolay_front/app/shared/widgets/doolay_page_header.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_page_subheader.dart';
 import 'package:doolay_front/app/shared/widgets/form_base.dart';
 import 'package:doolay_front/app/shared/widgets/loading_screen.dart';
@@ -61,8 +61,13 @@ class HistoryPageState extends State<HistoryPage> {
                         if (state.isNotEmpty) {
                           return ListView.builder(
                             itemCount: state.length,
-                            itemBuilder: (context, index) => ListTile(
-                              title: Text('${state[index].estado}'),
+                            itemBuilder: (context, index) => Material(
+                              type: MaterialType.transparency,
+                              child: ListTile(
+                                hoverColor: Styles.PRIMARY_COLOR.withOpacity(.5),
+                                title: Text('${state[index].estado}'),
+                                onTap: () => Modular.to.pushNamed('./details?id=${state[index].id}'),
+                              ),
                             ),
                           );
                         } else {

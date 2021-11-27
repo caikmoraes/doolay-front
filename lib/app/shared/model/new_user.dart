@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 class NewUser {
   String? numIdentificacao;
