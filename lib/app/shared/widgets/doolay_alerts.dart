@@ -91,9 +91,9 @@ class _DoolaySuccessAlertState extends State<DoolaySuccessAlert> {
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.red[100],
+                    color: Colors.green[100],
                     border: Border.all(
-                      color: Colors.red,
+                      color: Colors.green,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(5),

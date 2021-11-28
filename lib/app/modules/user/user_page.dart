@@ -182,7 +182,7 @@ class _UserFormState extends State<UserForm> {
                                 controller: senhaCtr,
                                 label: 'Senha',
                                 validator: (value) =>
-                                value == null ? 'Campo obrigatório' : null,
+                                    value == null ? 'Campo obrigatório' : null,
                               ),
                               const SizedBox(height: 16),
                               Row(
@@ -244,11 +244,12 @@ class _UserFormState extends State<UserForm> {
                               onState: (context, state) {
                                 if (state is ListSetor) {
                                   return DoolaySelectSetorField(
-                                      arrayValues: state.setores ?? [],
-                                      onChange: (Setor? value) => setState(() {
-                                            currentSetor = value;
-                                          }),
-                                      label: 'Setor');
+                                    arrayValues: state.setores ?? [],
+                                    onChange: (Setor? value) => setState(() {
+                                      currentSetor = value;
+                                    }),
+                                    label: 'Setor',
+                                  );
                                 }
                                 return Container();
                               },
@@ -392,9 +393,9 @@ class _UserFormState extends State<UserForm> {
   }
 
   String getTipoUsuario(Profile? profile) {
-    if(profile == Profile.aluno){
+    if (profile == Profile.aluno) {
       return "ALU";
-    } else if(profile == Profile.funcionario) {
+    } else if (profile == Profile.funcionario) {
       return "FUN";
     }
     return "";

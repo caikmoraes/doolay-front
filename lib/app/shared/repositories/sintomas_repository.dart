@@ -34,4 +34,12 @@ class SintomasRepository {
     var json = jsonDecode(response.body);
     return Symptoms.fromJson(json);
   }
+
+  Future<Symptoms> findById(int id) async {
+    WebClient client = Modular.get();
+    var path = 'saude/sintomas/$id/';
+    var response = await client.executeGet(path);
+    var json = jsonDecode(response.body);
+    return Symptoms.fromJson(json);
+  }
 }

@@ -1,13 +1,20 @@
+import 'package:doolay_front/app/modules/history/history_page.dart';
 import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_button.dart';
+import 'package:doolay_front/app/shared/widgets/doolay_date_picker.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_page_subheader.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_select_field.dart';
 import 'package:doolay_front/app/shared/widgets/form_base.dart';
+import 'package:doolay_front/app/shared/widgets/loading_screen.dart';
 import 'package:doolay_front/app/shared/widgets/page_base.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/report/report_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_triple/flutter_triple.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ReportPage extends StatefulWidget {
   final String title;
@@ -21,8 +28,18 @@ class ReportPage extends StatefulWidget {
 class ReportPageState extends State<ReportPage> {
   final ReportStore store = Modular.get();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final TextEditingController dateInitCtr = TextEditingController();
+  final TextEditingController dateFinCtr = TextEditingController();
+  final MaskTextInputFormatter dateMask = MaskTextInputFormatter(
+      mask: '##/##/####', filter: {'#': RegExp(r'[0-9]')});
 
   Report? currentReport;
+
+  @override
+  void initState() {
+    store.getReports();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +58,78 @@ class ReportPageState extends State<ReportPage> {
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-
-                  ],
+                child: ScopedBuilder(
+                  store: store,
+                  onError: (context, error) => DoolayErrorAlert(text: '$error'),
+                  onLoading: (context) => const LoadingScreen(),
+                  onState: (context, List<Report> state) => Column(
+                    children: [
+                      DoolaySelectSetorField(
+                        arrayValues: state,
+                        onChange: (Report? value) => setState(() {
+                          currentReport = value;
+                        }),
+                        label: 'Tipo do Relatório',
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DoolayDatePicker(
+                              label: 'Data Inicial',
+                              controller: dateInitCtr,
+                              mask: dateMask,
+                              onPicked: () => showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime.now(),
+                              ).then(
+                                (value) {
+                                  if (value != null) {
+                                    String date =
+                                        '${value.day}/${value.month}/${value.year}';
+                                    return dateInitCtr.text = date;
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: DoolayDatePicker(
+                              label: 'Data Final',
+                              controller: dateFinCtr,
+                              mask: dateMask,
+                              onPicked: () => showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime.now(),
+                              ).then(
+                                (value) {
+                                  if (value != null) {
+                                    String date =
+                                        '${value.day}/${value.month}/${value.year}';
+                                    dateFinCtr.text = date;
+                                    return dateFinCtr.text;
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      DoolayButton(
+                        text: 'Download',
+                        onTap: () => currentReport?.onClick!(
+                          Utils.toJsonDate(dateInitCtr.text),
+                          Utils.toJsonDate(dateFinCtr.text),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -53,30 +138,23 @@ class ReportPageState extends State<ReportPage> {
       ),
     );
   }
-
-  List<Report> getReports() => [
-        Report(
-          nome: 'Registros Diários',
-          onClick: () => debugPrint('Registros diários'),
-        ),
-        Report(
-          nome: 'Registros Diários (Gráfico)',
-          onClick: () => debugPrint('Registros diários (Gráfico'),
-        ),
-      ];
 }
 
 class Report {
+  int? id;
   String? nome;
   DateTime? dateInit;
   DateTime? dateFinal;
   Function? onClick;
+  bool enableDate;
 
   Report({
-    required this.nome,
+    this.id,
+    this.nome,
     this.dateInit,
     this.dateFinal,
-    required this.onClick,
+    this.onClick,
+    this.enableDate = true,
   });
 
   @override

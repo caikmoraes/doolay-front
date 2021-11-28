@@ -2,6 +2,8 @@
 import 'dart:developer';
 
 import 'package:doolay_front/app/shared/model/symptoms.dart';
+import 'package:doolay_front/app/shared/model/user_health_state.dart';
+import 'package:doolay_front/app/shared/repositories/health_state_repository.dart';
 import 'package:doolay_front/app/shared/repositories/sintomas_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -87,5 +89,24 @@ class SintomasStore extends NotifierStore<Exception, SintomasState> {
   }
 
   Future reset() async => update(InitSintomasState());
+
+  Future findById(int? id) async {
+    setLoading(true);
+    try {
+      HealthStateRepository healthRepo = Modular.get();
+      UserHealthState userHealthState = await healthRepo.findById(id!);
+      List<ItemSymptom> items = userHealthState.sintomas ?? [];
+      List<Symptoms> sintomas = [];
+      for(var item in items){
+        Symptoms sintoma = await repository.findById(item.sintoma!);
+        sintomas.add(sintoma);
+      }
+      update(SintomasList(sintomas));
+    } catch(e) {
+      setError(Exception(e));
+    } finally {
+      setLoading(false);
+    }
+  }
 
 }

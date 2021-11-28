@@ -30,4 +30,11 @@ class HealthStateRepository {
     var json = jsonDecode(response.body);
     return UserHealthState.fromJsonToList(json);
   }
+
+  Future<UserHealthState> findById(int id) async {
+    var path = 'saude/estadosaude/$id/';
+    var response = await client.executeGet(path);
+    var json = jsonDecode(response.body);
+    return UserHealthState.fromJson(json);
+  }
 }

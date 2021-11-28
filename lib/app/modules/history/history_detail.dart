@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/modules/health/health_store.dart';
 import 'package:doolay_front/app/modules/sintomas/sintomas_store.dart';
 import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
@@ -29,6 +30,14 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
+  void initState() {
+    if (widget.healthState?.estado != 'OK') {
+      sintomaStore.findById(widget.healthState!.id);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -45,37 +54,72 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
                 const ArrowBackHeader(),
                 const SizedBox(height: 8),
                 const DoolayPageSubHeader(text: 'Detalhes do registro:'),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
                       children: [
                         const Text('Como você estava:'),
-                        Text(widget.healthState!.estado == 'OK'? 'Bem': 'Não muito bem'),
+                        Text(widget.healthState!.estado == 'OK'
+                            ? 'Bem'
+                            : 'Não muito bem'),
                       ],
                     ),
                     Column(
                       children: [
                         const Text('Data de registro:'),
-                        Text('${widget.healthState!.date!.day}/${widget.healthState!.date!.month}/${widget.healthState!.date!.year}'),
+                        Text(
+                            '${widget.healthState!.date!.day}/${widget.healthState!.date!.month}/${widget.healthState!.date!.year}'),
                       ],
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ScopedBuilder(
-                      store: sintomaStore,
-                      onError: (context, error) =>
-                          DoolayErrorAlert(text: '$error'),
-                      onLoading: (context) =>
-                          const Center(child: LoadingScreen()),
-                      onState: (context, state) => Wrap(),
+                const SizedBox(height: 16),
+                if (widget.healthState!.estado == 'OK') ...[
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.health_and_safety,
+                          size: 32,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'Parabéns você está se cuidando bem. Nenhum sintoma apresentado.',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                ] else ...[
+                  const DoolayPageSubHeader(text: 'Sintomas:',),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ScopedBuilder(
+                        store: sintomaStore,
+                        onError: (context, error) =>
+                            DoolayErrorAlert(text: '$error'),
+                        onLoading: (context) =>
+                            const Center(child: LoadingScreen()),
+                        onState: (context, state) {
+                          SintomasList sintomasList = state as SintomasList;
+                          return ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
+                            itemCount: sintomasList.sintomas.length,
+                            itemBuilder: (context, index) => ListTile(
+                              title: Text(sintomasList.sintomas[index].nome!),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

@@ -12,6 +12,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:doolay_front/app/modules/history/history_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget {
   final String title;
@@ -114,4 +115,15 @@ class HistoryPageState extends State<HistoryPage> {
 
 class Utils {
   static String formatDate(DateTime? date) => date != null? '${date.day}/${date.month}/${date.year}' : '';
+
+  static String formatJsonDate(DateTime? date) => date != null? '${date.year}-${date.month}-${date.day}' : '';
+
+  static String toJsonDate(String dateStr) {
+    DateFormat format = DateFormat('dd/MM/yyyy');
+    DateTime date = format.parse(dateStr);
+    return '${date.year}-${date.month}-${date.day}';
+  }
+
+  static String fromDate(DateTime date) => '${date.year}-${date.month}-${date.day}';
+
 }

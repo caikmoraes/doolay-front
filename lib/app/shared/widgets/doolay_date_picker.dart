@@ -6,12 +6,15 @@ class DoolayDatePicker extends StatefulWidget {
   final TextEditingController controller;
   final Function onPicked;
   final MaskTextInputFormatter mask;
+  final bool? enabled;
+
   const DoolayDatePicker({
     Key? key,
     required this.label,
     required this.controller,
     required this.onPicked,
     required this.mask,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -31,6 +34,7 @@ class _DoolayDatePickerState extends State<DoolayDatePicker> {
           ),
           controller: widget.controller,
           inputFormatters: [widget.mask],
+          enabled: widget.enabled,
         ),
         Visibility(
           child: Positioned(

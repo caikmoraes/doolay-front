@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/modules/history/history_page.dart';
 import 'package:doolay_front/app/shared/model/symptoms.dart';
 
 class UserHealthState {
@@ -12,6 +13,7 @@ class UserHealthState {
     this.user,
     this.estado,
     this.sintomas,
+    this.date
   });
 
   UserHealthState.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class UserHealthState {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'user': user,
         'estado': estado,
+        'date': date.toString(),
       };
 
   static Future<List<UserHealthState>> fromJsonToList(List<dynamic> jsonList) async{
