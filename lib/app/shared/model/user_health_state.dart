@@ -4,6 +4,7 @@ class UserHealthState {
   int? id;
   String? user;
   String? estado;
+  DateTime? date;
   List<ItemSymptom>? sintomas;
 
   UserHealthState({
@@ -20,6 +21,9 @@ class UserHealthState {
     if(json['sintomas'] != null) {
       sintomas = ItemSymptom.fromJsonToList(json['sintomas']);
     }
+    if(json['date'] != null) {
+      date = DateTime.parse(json['date']);
+    }
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -30,11 +34,7 @@ class UserHealthState {
   static Future<List<UserHealthState>> fromJsonToList(List<dynamic> jsonList) async{
     List<UserHealthState> list = jsonList
         .map(
-          (json) => UserHealthState(
-            id: json['id'],
-            user: json['user'],
-            estado: json['estado'],
-          ),
+          (json) => UserHealthState.fromJson(json)
         )
         .toList();
 

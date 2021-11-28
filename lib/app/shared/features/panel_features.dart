@@ -39,7 +39,7 @@ List<Features> getGestorFeatures() => [
       Features(
         'Emitir Relatório',
         Icons.description,
-        route: './history/',
+        route: './report/',
       ),
     ];
 
@@ -67,6 +67,6 @@ List<Features> getAdmFeatures() => [
       Features(
         'Emitir Relatório',
         Icons.description,
-        route: './history/',
+        route: './report/',
       ),
     ];

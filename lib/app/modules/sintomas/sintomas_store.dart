@@ -76,7 +76,6 @@ class SintomasStore extends NotifierStore<Exception, SintomasState> {
   Future edit(String newDesc, Symptoms sintoma) async {
     setLoading(true);
     try {
-      debugger();
       sintoma.nome = newDesc;
       Symptoms edited = await repository.update(sintoma.toJson(), sintoma.id!);
       update(SintomaEdicaoState(edited));

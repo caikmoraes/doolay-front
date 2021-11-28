@@ -2,6 +2,7 @@ import 'package:doolay_front/app/modules/health/health_module.dart';
 import 'package:doolay_front/app/modules/history/history_module.dart';
 import 'package:doolay_front/app/modules/panel/panel_page.dart';
 import 'package:doolay_front/app/modules/panel/panel_store.dart';
+import 'package:doolay_front/app/modules/report/report_module.dart';
 import 'package:doolay_front/app/modules/sintomas/sintomas_module.dart';
 import 'package:doolay_front/app/modules/sintomas/sintomas_store.dart';
 import 'package:doolay_front/app/modules/user/user_module.dart';
@@ -30,5 +31,6 @@ class PanelModule extends Module {
     ModuleRoute('/health', module: HealthModule()),
     ModuleRoute('/history', module: HistoryModule()),
     ModuleRoute('/symptoms', module: SintomasModule()),
+    ModuleRoute('/report', module: ReportModule()),
   ];
 }

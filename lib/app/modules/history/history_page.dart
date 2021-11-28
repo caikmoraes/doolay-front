@@ -65,8 +65,19 @@ class HistoryPageState extends State<HistoryPage> {
                               type: MaterialType.transparency,
                               child: ListTile(
                                 hoverColor: Styles.PRIMARY_COLOR.withOpacity(.5),
-                                title: Text('${state[index].estado}'),
-                                onTap: () => Modular.to.pushNamed('./details?id=${state[index].id}'),
+                                title: Row(
+                                  children: [
+                                    Text(Utils.formatDate(state[index].date)),
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                                      height: 24,
+                                      width: 2,
+                                      color: state[index].estado == 'OK'? Styles.PRIMARY_COLOR : Colors.yellow,
+                                    ),
+                                    Text(state[index].estado == 'OK'? 'Sentindo-se bem' : 'Sentindo-se não muito bem'),
+                                  ],
+                                ),
+                                onTap: () => Modular.to.pushNamed('./details?id=${state[index].id}', arguments: state[index]),
                               ),
                             ),
                           );
@@ -99,4 +110,8 @@ class HistoryPageState extends State<HistoryPage> {
       ),
     );
   }
+}
+
+class Utils {
+  static String formatDate(DateTime? date) => date != null? '${date.day}/${date.month}/${date.year}' : '';
 }

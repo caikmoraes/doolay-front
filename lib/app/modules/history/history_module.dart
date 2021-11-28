@@ -17,6 +17,7 @@ class HistoryModule extends Module {
       '/details',
       child: (_, args) => HistoryDetailPage(
         historyID: args.queryParams['id'],
+        healthState: args.data,
       ),
     ),
   ];

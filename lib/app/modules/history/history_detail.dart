@@ -1,6 +1,7 @@
 import 'package:doolay_front/app/modules/sintomas/sintomas_store.dart';
 import 'package:doolay_front/app/shared/app_constants.dart';
 import 'package:doolay_front/app/shared/doolay_menu.dart';
+import 'package:doolay_front/app/shared/model/user_health_state.dart';
 import 'package:doolay_front/app/shared/widgets/arrow_back.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_alerts.dart';
 import 'package:doolay_front/app/shared/widgets/doolay_page_subheader.dart';
@@ -13,8 +14,10 @@ import 'package:flutter_triple/flutter_triple.dart';
 
 class HistoryDetailPage extends StatefulWidget {
   final String? historyID;
+  final UserHealthState? healthState;
 
-  const HistoryDetailPage({Key? key, required this.historyID})
+  const HistoryDetailPage(
+      {Key? key, required this.historyID, required this.healthState})
       : super(key: key);
 
   @override
@@ -42,6 +45,24 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
                 const ArrowBackHeader(),
                 const SizedBox(height: 8),
                 const DoolayPageSubHeader(text: 'Detalhes do registro:'),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        const Text('Como você estava:'),
+                        Text(widget.healthState!.estado == 'OK'? 'Bem': 'Não muito bem'),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text('Data de registro:'),
+                        Text('${widget.healthState!.date!.day}/${widget.healthState!.date!.month}/${widget.healthState!.date!.year}'),
+                      ],
+                    ),
+                  ],
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
