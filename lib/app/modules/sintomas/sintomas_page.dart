@@ -30,6 +30,7 @@ class SintomasPageState extends State<SintomasPage> {
   final SintomasStore newSintomaStore = Modular.get();
   final TextEditingController sintomaCtr = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   void initState() {
     store.fetchSintomas();
@@ -62,35 +63,145 @@ class SintomasPageState extends State<SintomasPage> {
                     onState: (_, state) {
                       state = state as SintomasList;
                       List<Symptoms> sintomas = state.sintomas;
-                      return ListView.builder(
+                      return ListView.separated(
+                        separatorBuilder: (_, __) => const Divider(
+                          color: Colors.grey,
+                        ),
                         physics: const BouncingScrollPhysics(),
                         itemCount: sintomas.length,
                         itemBuilder: (context, index) => Material(
                           type: MaterialType.transparency,
                           child: ListTile(
-                            hoverColor: Styles.PRIMARY_COLOR.withOpacity(.5),
                             title: Text('${sintomas[index].nome}'),
                             trailing: PopupMenuButton(
                               tooltip: 'Ações',
                               itemBuilder: (BuildContext context) =>
                                   <PopupMenuEntry>[
                                 PopupMenuItem(
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.edit),
-                                      SizedBox(width: 8),
-                                      Text('Editar')
-                                    ],
-                                  ),
-                                ),
+                                    value: 1,
+                                    child: Row(
+                                      children: const [
+                                        Icon(Icons.edit),
+                                        SizedBox(width: 8),
+                                        Text('Editar')
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Future.delayed(
+                                        const Duration(milliseconds: 10),
+                                      ).then(
+                                        (value) => showDialog(
+                                          context: context,
+                                          builder: (dialogCtx) => ScopedBuilder(
+                                            store: newSintomaStore,
+                                            onError: (_, error) => AlertDialog(
+                                              title: const Text('Erro'),
+                                              content: Text('$error'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(dialogCtx),
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ),
+                                            onLoading: (_) => AlertDialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: const [
+                                                  LoadingScreen(),
+                                                ],
+                                              ),
+                                            ),
+                                            onState: (_, state) {
+                                              if (state is InitSintomasState) {
+                                                return AlertDialog(
+                                                  content: Form(
+                                                    key: formKey,
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        DoolayPageSubHeader(
+                                                            text:
+                                                                'Editar Sintoma: ${sintomas[index].nome}'),
+                                                        const SizedBox(
+                                                            height: 16),
+                                                        DoolayTextField(
+                                                            controller:
+                                                                sintomaCtr,
+                                                            label:
+                                                                'Nova descrição',
+                                                            validator: (value) =>
+                                                                value == null
+                                                                    ? 'Preencha o nome do sintoma para editar.'
+                                                                    : null),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              dialogCtx),
+                                                      child: const Text(
+                                                          'Cancelar'),
+                                                    ),
+                                                    TextButton(
+                                                      child:
+                                                          const Text('Salvar'),
+                                                      onPressed: () async {
+                                                        if (formKey
+                                                            .currentState!
+                                                            .validate()) {
+                                                          await newSintomaStore
+                                                              .edit(
+                                                                  sintomaCtr
+                                                                      .text,
+                                                                  sintomas[
+                                                                      index]);
+                                                          store.fetchSintomas();
+                                                        }
+                                                      },
+                                                    )
+                                                  ],
+                                                );
+                                              } else if (state
+                                                  is SintomaEdicaoState) {
+                                                return AlertDialog(
+                                                  content: const Text(
+                                                      'Sintoma editado com sucesso'),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: const Text('OK'),
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              dialogCtx),
+                                                    )
+                                                  ],
+                                                );
+                                              }
+                                              return Container();
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }),
                                 PopupMenuItem(
+                                  value: 2,
                                   child: Row(
                                     children: const [
-                                      Icon(Icons.remove),
+                                      Icon(Icons.delete),
                                       SizedBox(width: 8),
                                       Text('Excluir'),
                                     ],
                                   ),
+                                  onTap: () {
+                                    store.remove(sintomas[index].id);
+                                    store.fetchSintomas();
+                                  },
                                 ),
                               ],
                             ),
@@ -150,8 +261,9 @@ class SintomasPageState extends State<SintomasPage> {
                                 TextButton(
                                   child: const Text('Salvar'),
                                   onPressed: () async {
-                                    if(formKey.currentState!.validate()){
-                                      await newSintomaStore.save(sintomaCtr.text);
+                                    if (formKey.currentState!.validate()) {
+                                      await newSintomaStore
+                                          .save(sintomaCtr.text);
                                       store.fetchSintomas();
                                     }
                                   },

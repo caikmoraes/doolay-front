@@ -1,6 +1,9 @@
 
+import 'dart:developer';
+
 import 'package:doolay_front/app/shared/model/symptoms.dart';
 import 'package:doolay_front/app/shared/repositories/sintomas_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
@@ -18,6 +21,12 @@ class SintomaCadastradoState extends SintomasState{
   final Symptoms sintoma;
 
   SintomaCadastradoState(this.sintoma);
+}
+
+class SintomaEdicaoState extends SintomasState{
+  final Symptoms sintoma;
+
+  SintomaEdicaoState(this.sintoma);
 }
 
 
@@ -46,6 +55,33 @@ class SintomasStore extends NotifierStore<Exception, SintomasState> {
       Symptoms novoSintoma = await repository.save(json);
       update(SintomaCadastradoState(novoSintoma));
     } catch(e) {
+      setError(Exception(e));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  Future remove(int? id) async {
+    setLoading(true);
+    try {
+      await repository.delete(id!);
+      update(state);
+    } catch(e) {
+      setError(Exception(e));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  Future edit(String newDesc, Symptoms sintoma) async {
+    setLoading(true);
+    try {
+      debugger();
+      sintoma.nome = newDesc;
+      Symptoms edited = await repository.update(sintoma.toJson(), sintoma.id!);
+      update(SintomaEdicaoState(edited));
+    } catch(e) {
+      debugPrint('$e');
       setError(Exception(e));
     } finally {
       setLoading(false);

@@ -20,4 +20,18 @@ class SintomasRepository {
     var json = jsonDecode(response.body);
     return Symptoms.fromJson(json);
   }
+
+  Future delete(int id) async {
+    WebClient client = Modular.get();
+    var path = 'saude/sintomas/$id/';
+    await client.executeDelete(path: path);
+  }
+
+  Future<Symptoms> update(Map<String, dynamic> data, int id) async {
+    WebClient client = Modular.get();
+    var path = 'saude/sintomas/$id/';
+    var response = await client.executePatch(path: path, json: data);
+    var json = jsonDecode(response.body);
+    return Symptoms.fromJson(json);
+  }
 }

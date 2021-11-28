@@ -18,6 +18,11 @@ class Symptoms {
     id = json['id'];
     nome = json['nome'];
   }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'id': '$id',
+    'nome': nome,
+  };
 }
 
 class ItemSymptom {
