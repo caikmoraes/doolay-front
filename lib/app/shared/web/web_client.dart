@@ -53,7 +53,6 @@ class WebClient {
     required String path,
     required Map<String, dynamic> json,
   }) async {
-    debugger();
     AuthStore store = Modular.get();
     String token = store.getToken();
     if (token.isEmpty) Modular.to.pushReplacementNamed('/auth/');

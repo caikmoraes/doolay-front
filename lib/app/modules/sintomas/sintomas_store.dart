@@ -80,11 +80,12 @@ class SintomasStore extends NotifierStore<Exception, SintomasState> {
       Symptoms edited = await repository.update(sintoma.toJson(), sintoma.id!);
       update(SintomaEdicaoState(edited));
     } catch(e) {
-      debugPrint('$e');
       setError(Exception(e));
     } finally {
       setLoading(false);
     }
   }
+
+  Future reset() async => update(InitSintomasState());
 
 }

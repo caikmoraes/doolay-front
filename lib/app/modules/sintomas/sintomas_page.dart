@@ -87,6 +87,8 @@ class SintomasPageState extends State<SintomasPage> {
                                       ],
                                     ),
                                     onTap: () {
+                                      sintomaCtr.text = '';
+                                      newSintomaStore.reset();
                                       Future.delayed(
                                         const Duration(milliseconds: 10),
                                       ).then(
@@ -216,76 +218,7 @@ class SintomasPageState extends State<SintomasPage> {
                   child: DoolayButton(
                     text: 'Novo sintoma',
                     onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => ScopedBuilder(
-                        store: newSintomaStore,
-                        onError: (_, error) => AlertDialog(
-                          title: const Text('Erro'),
-                          content: Text('$error'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                        onLoading: (_) => const AlertDialog(
-                          backgroundColor: Colors.transparent,
-                          content: LoadingScreen(),
-                        ),
-                        onState: (_, state) {
-                          if (state is InitSintomasState) {
-                            return AlertDialog(
-                              content: Form(
-                                key: formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const DoolayPageSubHeader(
-                                        text: 'Novo Sintoma:'),
-                                    const SizedBox(height: 16),
-                                    DoolayTextField(
-                                        controller: sintomaCtr,
-                                        label: 'Ex: "Dor de cabeça"',
-                                        validator: (value) => value == null
-                                            ? 'Preencha o nome do sintoma'
-                                            : null),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('Cancelar'),
-                                ),
-                                TextButton(
-                                  child: const Text('Salvar'),
-                                  onPressed: () async {
-                                    if (formKey.currentState!.validate()) {
-                                      await newSintomaStore
-                                          .save(sintomaCtr.text);
-                                      store.fetchSintomas();
-                                    }
-                                  },
-                                )
-                              ],
-                            );
-                          } else if (state is SintomaCadastradoState) {
-                            return AlertDialog(
-                              content:
-                                  const Text('Sintoma cadastrado com sucesso'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () => Navigator.pop(context),
-                                )
-                              ],
-                            );
-                          }
-                          return Container();
-                        },
-                      ),
-                    ),
+                        context: context, builder: (context) => editSintoma()),
                   ),
                 )
               ],
@@ -294,5 +227,79 @@ class SintomasPageState extends State<SintomasPage> {
         ),
       ),
     );
+  }
+
+  editSintoma() {
+    return showDialog(
+        context: context,
+        builder: (context) => ScopedBuilder(
+          store: newSintomaStore,
+          onError: (_, error) => AlertDialog(
+            title: const Text('Erro'),
+            content: Text('$error'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+          onLoading: (_) => const AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: LoadingScreen(),
+          ),
+          onState: (_, state) {
+            if (state is InitSintomasState) {
+              return AlertDialog(
+                content: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const DoolayPageSubHeader(text: 'Novo Sintoma:'),
+                      const SizedBox(height: 16),
+                      DoolayTextField(
+                          controller: sintomaCtr,
+                          label: 'Ex: "Dor de cabeça"',
+                          validator: (value) => value == null
+                              ? 'Preencha o nome do sintoma'
+                              : null),
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Cancelar'),
+                  ),
+                  TextButton(
+                    child: const Text('Salvar'),
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        await newSintomaStore.save(sintomaCtr.text);
+                        store.fetchSintomas();
+                      }
+                    },
+                  )
+                ],
+              );
+            } else if (state is SintomaCadastradoState) {
+              return AlertDialog(
+                content: const Text('Sintoma cadastrado com sucesso'),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      newSintomaStore.initStore();
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              );
+            }
+            return Container();
+          },
+        ),
+      );
   }
 }
