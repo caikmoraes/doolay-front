@@ -1,3 +1,4 @@
+import 'package:doolay_front/app/modules/auth/auth_store.dart';
 import 'package:doolay_front/app/shared/layout/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -6,8 +7,9 @@ import 'app_constants.dart';
 import 'layout/style.dart';
 import 'widgets/doolay_button.dart';
 
-AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
-    AppBar(
+AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) {
+  AuthStore authStore = Modular.get();
+  return AppBar(
       elevation: 16,
       leading: Padding(
         padding: const EdgeInsets.only(left: 8),
@@ -24,7 +26,6 @@ AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
                   'DOOLAY',
                   style: Theme.of(ctx).textTheme.headline3,
                 ),
-                Expanded(child: Container()),
                 ...getDoolayPages().map(
                   (page) => page.name != 'Entrar'
                       ? Container(
@@ -41,8 +42,11 @@ AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
                           ),
                         )
                       : DoolayButton(
-                          text: page.name,
-                          onTap: () => Modular.to.pushNamed(page.route),
+                          text: authStore.getToken().isEmpty? page.name : 'Sair',
+                          onTap: authStore.getToken().isEmpty? () => Modular.to.pushNamed(page.route) : () {
+                            authStore.destroy();
+                            Modular.to.pushReplacementNamed('/auth/');
+                          },
                         ),
                 ),
               ],
@@ -64,11 +68,13 @@ AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) =>
               ],
             ),
     );
+}
 
-Drawer doolayDrawer(GlobalKey<ScaffoldState> key, BuildContext ctx) => Drawer(
+Drawer doolayDrawer(GlobalKey<ScaffoldState> key, BuildContext ctx) {
+  AuthStore authStore = Modular.get();
+  return Drawer(
       child: Column(
         children: [
-          const DrawerHeader(child: Text('Header')),
           ...getDoolayPages().map(
             (page) => page.name != 'Entrar'
                 ? ListTile(
@@ -85,8 +91,10 @@ Drawer doolayDrawer(GlobalKey<ScaffoldState> key, BuildContext ctx) => Drawer(
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            child: Text(page.name),
-                            onPressed: () => Modular.to.pushNamed(page.route),
+                            child: Text(authStore.getToken().isEmpty? page.name : 'Sair'),
+                            onPressed: authStore.getToken().isEmpty? () => Modular.to.pushNamed(page.route): () {
+                              Modular.to.pushReplacementNamed('/auth/');
+                            },
                           ),
                         )
                       ],
@@ -96,6 +104,7 @@ Drawer doolayDrawer(GlobalKey<ScaffoldState> key, BuildContext ctx) => Drawer(
         ],
       ),
     );
+}
 
 List<DoolayPage> getDoolayPages() {
   return [
