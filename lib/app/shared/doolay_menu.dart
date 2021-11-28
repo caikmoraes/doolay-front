@@ -44,7 +44,7 @@ AppBar doolayMenu(GlobalKey<ScaffoldState> scaffoldKey, BuildContext ctx) {
                       : DoolayButton(
                           text: authStore.getToken().isEmpty? page.name : 'Sair',
                           onTap: authStore.getToken().isEmpty? () => Modular.to.pushNamed(page.route) : () {
-                            authStore.destroy();
+                            Modular.dispose();
                             Modular.to.pushReplacementNamed('/auth/');
                           },
                         ),
@@ -93,6 +93,7 @@ Drawer doolayDrawer(GlobalKey<ScaffoldState> key, BuildContext ctx) {
                           child: ElevatedButton(
                             child: Text(authStore.getToken().isEmpty? page.name : 'Sair'),
                             onPressed: authStore.getToken().isEmpty? () => Modular.to.pushNamed(page.route): () {
+                              Modular.dispose();
                               Modular.to.pushReplacementNamed('/auth/');
                             },
                           ),

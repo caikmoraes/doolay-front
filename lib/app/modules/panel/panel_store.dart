@@ -15,7 +15,7 @@ class PanelStore extends StreamStore<Exception, UserModel> {
       UserModel? model = await repo.fetchUserDetails();
       if(model == null) {
         setLoading(false);
-        Modular.to.pushReplacementNamed('/auth');
+        Modular.to.pushReplacementNamed('/auth/');
       } else {
         update(model);
       }
