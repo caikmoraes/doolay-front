@@ -7,11 +7,11 @@
 O projeto ainda está em desenvolvimento e as próximas atualizações do front-end serão voltadas nas seguintes tarefas:
 
 - [x] Home Page
-- [ ] Página informativa sobre Covid-19 
-- [ ] Página informativa sobre sobre os responsáveis pelo projeto
-- [ ] Página de Contato
+- [x] Página informativa sobre Covid-19 
+- [x] Página informativa sobre sobre os responsáveis pelo projeto
+- [x] Página de Contato
 - [x] Página de Login
-- [ ] Painel do usuário
+- [x] Painel do usuário
 
 ## :books: Aprendizado
 
