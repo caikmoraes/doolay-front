@@ -18,7 +18,7 @@ class AuthStore extends NotifierStore<Exception, String> {
       String? token = await repo.login(json);
       if (token != null) {
         update(token);
-        Modular.to.navigate('/panel/');
+        Modular.to.pushReplacementNamed('/panel/');
       } else {
         setError(LoginException('Usuário ou senha incorretos'));
       }
