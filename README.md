@@ -23,7 +23,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações do front-
 
 * Redimensionamento de imagens
 * Publicação do app na Play Store
-* Publicação do app na Apple Store
+* Publicação do app na App Store
 
 ## :handshake: Colaboradores
 
